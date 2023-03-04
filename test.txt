@@ -1,0 +1,54 @@
+map[interval: meta_event_type:heartbeat post_type:meta_event self_id: status: time:]
+age:/汪汪 self_id: sender: sub_type:friend target_id: time: user_id:]
+user_id:]
+map[font: message:测试测试 message_id: message_type:private post_type:message raw_message:测试测试 self_id: sender: sub_type:friend target_id: time: user_id:]
+map[interval: meta_event_type:heartbeat post_type:meta_event self_id: status: time:]
+map[font: message:你好 message_id: message_type:private post_type:message raw_message:你好 self_id: sender: sub_type:friend target_id: time: user_id:]
+map[font: message:在吗 message_id: message_type:private post_type:message raw_message:在吗 self_id: sender: sub_type:friend target_id: time: user_id:]
+map[font: message:kkp message_id: message_type:private post_type:message raw_message:kkp self_id: sender: sub_type:friend target_id: time: user_id:]
+map[interval: meta_event_type:heartbeat post_type:meta_event self_id: status: time:]
+map[font: message:/汪汪 message_id: message_type:private post_type:message raw_message:/汪汪 self_id: sender: sub_type:friend target_id: time: user_id:]
+map[font: message:[CQ:face,id=107][CQ:face,id=107] message_id: message_type:private post_type:message raw_message:[CQ:face,id=107][CQ:face,id=107] self_id: sender: sub_type:friend target_id: time: user_id:]
+map[interval: meta_event_type:heartbeat post_type:meta_event self_id: status: time:]
+map[font:0 message:测试测试 message_id:-1.083406816e+09 message_type:private post_type:message raw_message:测试测试 self_id:1.975205178e+09 sender:map[age:0 nickname:Pwww sex:unknown user_id:2.471967424e+09] sub_type:friend target_id:1.975205178e+09 time:1.677941638e+09 user_id:2.471967424e+09]
+map[interval:5000 meta_event_type:heartbeat post_type:meta_event self_id:1.975205178e+09 status:map[app_enabled:true app_good:true app_initialized:true good:true online:true plugins_good:<nil> stat:map[disconnect_times:0 last_message_time:1.677941638e+09 lost_times:0 message_received:1 message_sent:0 packet_lost:0 packet_received:32 packet_sent:22]] time:1.67794164e+09]
+map[font:0 message:不试怎么知道 message_id:6.44208538e+08 message_type:private post_type:message raw_message:不试怎么知道 self_id:1.975205178e+09 sender:map[age:0 nickname:Pwww sex:unknown user_id:2.471967424e+09] sub_type:friend target_id:1.975205178e+09 time:1.677941642e+09 user_id:2.471967424e+09]
+map[font:0 message:[CQ:image,file=f311838d7c006c272477b1127cdf5484.image,url=https://c2cpicdw.qpic.cn/offpic_new/2471967424//2471967424-889927657-F311838D7C006C272477B1127CDF5484/0?term=2&amp;is_origin=0] message_id:1.365436172e+09 message_type:private post_type:message raw_message:[CQ:image,file=f311838d7c006c272477b1127cdf5484.image,url=https://c2cpicdw.qpic.cn/offpic_new/2471967424//2471967424-889927657-F311838D7C006C272477B1127CDF5484/0?term=2&amp;is_origin=0] self_id:1.975205178e+09 sender:map[age:0 nickname:Pwww sex:unknown user_id:2.471967424e+09] sub_type:friend target_id:1.975205178e+09 time:1.677941645e+09 user_id:2.471967424e+09]
+map[interval:5000 meta_event_type:heartbeat post_type:meta_event self_id:1.975205178e+09 status:map[app_enabled:true app_good:true app_initialized:true good:true online:true plugins_good:<nil> stat:map[disconnect_times:0 last_message_time:1.677941645e+09 lost_times:0 message_received:3 message_sent:0 packet_lost:0 packet_received:41 packet_sent:29]] time:1.677941645e+09]
+map[font:0 message:/汪汪/汪汪/汪汪 message_id:-1.042416995e+09 message_type:private post_type:message raw_message:/汪汪/汪汪/汪汪 self_id:1.975205178e+09 sender:map[age:0 nickname:Pwww sex:unknown user_id:2.471967424e+09] sub_type:friend target_id:1.975205178e+09 time:1.677941647e+09 user_id:2.471967424e+09]
+map[interval:5000 meta_event_type:heartbeat post_type:meta_event self_id:1.975205178e+09 status:map[app_enabled:true app_good:true app_initialized:true good:true online:true plugins_good:<nil> stat:map[disconnect_times:0 last_message_time:1.677941647e+09 lost_times:0 message_received:4 message_sent:0 packet_lost:0 packet_received:49 packet_sent:36]] time:1.67794165e+09]
+
+1
+1
+1
+{0 meta_event    1975205178 { 0}  0 1677943070 0}
+{0 meta_event    1975205178 { 0}  0 1677943075 0}
+{0 meta_event    1975205178 { 0}  0 1677943080 0}
+{0 meta_event    1975205178 { 0}  0 1677943085 0}
+{0 message private fe fe 1975205178 {Pwww 2471967424} friend 1975205178 1677943089 2471967424}
+{0 message private few few 1975205178 {Pwww 2471967424} friend 1975205178 1677943089 2471967424}
+{0 message private wef wef 1975205178 {Pwww 2471967424} friend 1975205178 1677943089 2471967424}
+{0 message private few few 1975205178 {Pwww 2471967424} friend 1975205178 1677943090 2471967424}
+{0 meta_event    1975205178 { 0}  0 1677943090 0}
+{0 meta_event    1975205178 { 0}  0 1677943095 0}
+{0 meta_event    1975205178 { 0}  0 1677943100 0}
+{0 meta_event    1975205178 { 0}  0 1677943105 0}
+{0 meta_event    1975205178 { 0}  0 1677943110 0}
+{0 meta_event    1975205178 { 0}  0 1677943115 0}
+{0 message private 草 草 1975205178 {Pwww 2471967424} friend 1975205178 1677944437 2471967424}
+{0 message private 11 11 1975205178 {Pwww 2471967424} friend 1975205178 1677944610 2471967424}
+{0 message private 11 11 1975205178 {Pwww 2471967424} friend 1975205178 1677944663 2471967424}
+{0 message private 11 11 1975205178 {Pwww 2471967424} friend 1975205178 1677944678 2471967424}
+{0 message private 11 11 1975205178 {Pwww 2471967424} friend 1975205178 1677945024 2471967424}
+{0 message private 11 11 1975205178 {Pwww 2471967424} friend 1975205178 1677945085 2471967424}
+{0 message group 被大师哥创碎了 被大师哥创碎了 1975205178 {芳泽霞 489272778} normal 0 1677945114 489272778}
+{0 message group [CQ:image,file=cc6706ea2f73904ae858b17de28ac0bb.image,subType=0,url=https://gchat.qpic.cn/gchatpic_new/489272778/4182249427-2812158282-CC6706EA2F73904AE858B17DE28AC0BB/0?term=2&amp;is_origin=1] [CQ:image,file=cc6706ea2f73904ae858b17de28ac0bb.image,subType=0,url=https://gchat.qpic.cn/gchatpic_new/489272778/4182249427-2812158282-CC6706EA2F73904AE858B17DE28AC0BB/0?term=2&amp;is_origin=1] 1975205178 {芳泽霞 489272778} normal 0 1677945126 489272778}
+{0 message group 大师哥秒人是真快 大师哥秒人是真快 1975205178 {芳泽霞 489272778} normal 0 1677945146 489272778}
+{0 message private 11 11 1975205178 {Pwww 2471967424} friend 1975205178 1677945218 2471967424}
+{0 message private 11 11 1975205178 {Pwww 2471967424} friend 1975205178 1677945238 2471967424}
+{0 message private 11 11 1975205178 {Pwww 2471967424} friend 1975205178 1677945361 2471967424}
+{0 message private 1 1 1975205178 {Pwww 2471967424} friend 1975205178 1677945372 2471967424}
+{0 message private 11 11 1975205178 {Pwww 2471967424} friend 1975205178 1677945405 2471967424}
+{0 message private kkp kkp 1975205178 {Pwww 2471967424} friend 1975205178 1677945432 2471967424}
+{0 message private [CQ:image,file=53923bad96dc2c074d86542e651838c0.image,url=https://c2cpicdw.qpic.cn/offpic_new/2471967424//2471967424-3522861672-53923BAD96DC2C074D86542E651838C0/0?term=2&amp;is_origin=0] [CQ:image,file=53923bad96dc2c074d86542e651838c0.image,url=https://c2cpicdw.qpic.cn/offpic_new/2471967424//2471967424-3522861672-53923BAD96DC2C074D86542E651838C0/0?term=2&amp;is_origin=0] 1975205178 {Pwww 2471967424} friend 1975205178 1677945478 2471967424}
+{0 message group [CQ:image,file=74a0c6b98f67067851192f6d16f04e25.image,subType=0,url=https://gchat.qpic.cn/gchatpic_new/2471967424/4182249427-3121543996-74A0C6B98F67067851192F6D16F04E25/0?term=2&amp;is_origin=0]做个一个echo机器人[CQ:image,file=a42887de9285fed6cfc2905f5a63809e.image,subType=1,url=https://gchat.qpic.cn/gchatpic_new/2471967424/4182249427-2533728704-A42887DE9285FED6CFC2905F5A63809E/0?term=2&amp;is_origin=0]u1s1 go-cqhttp完成度挺高 [CQ:image,file=74a0c6b98f67067851192f6d16f04e25.image,subType=0,url=https://gchat.qpic.cn/gchatpic_new/2471967424/4182249427-3121543996-74A0C6B98F67067851192F6D16F04E25/0?term=2&amp;is_origin=0]做个一个echo机器人[CQ:image,file=a42887de9285fed6cfc2905f5a63809e.image,subType=1,url=https://gchat.qpic.cn/gchatpic_new/2471967424/4182249427-2533728704-A42887DE9285FED6CFC2905F5A63809E/0?term=2&amp;is_origin=0]u1s1 go-cqhttp完成度挺高 1975205178 {Pwww 2471967424} normal 0 1677945538 2471967424}
