@@ -3,70 +3,90 @@ package server
 import (
 	"UsaBot/Models"
 	"UsaBot/common"
-	"bytes"
 	"encoding/json"
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"io"
 	"log"
-	"net/http"
+	"strings"
+	"sync"
 )
 
-const url = "http://127.0.0.1:5700"
-const accessToken = ""
-const contentType = "application/json"
-const authorization = ""
+var (
+	dataQueue = make(chan Models.Message, 10)
+	msgQueue  = make(chan Models.Message, 3)
+	reqQueue  = make(chan Models.Message, 3)
+	ntsQueue  = make(chan Models.Message, 3)
+	lock      sync.RWMutex
+)
 
-func Tester(c *gin.Context) {
-	data, _ := c.GetRawData()
-	body := make(map[string]interface{})
-	_ = json.Unmarshal(data, &body)
-	log.Println(body)
-	content := fmt.Sprintln(body)
-	common.TXTWriter(content)
+func Router() {
+	for true {
+		select {
+		case body := <-dataQueue:
+			switch body.PostType {
+			case "message":
+				msgQueue <- body
+			case "request":
+				reqQueue <- body
+			case "notice":
+				ntsQueue <- body
+			}
+		}
+	}
 }
 
-func MainHandle(c *gin.Context) {
+func MsgHandler() {
+	for true {
+		select {
+		case body := <-msgQueue:
+			switch body.MessageType {
+			case "private":
+				echo(body)
+			case "group":
+				if strings.Contains(body.Message, "[CQ:at,qq=1975205178]") {
+					if strings.Contains(body.Message, "搜图") {
+						souTu(body)
+					}
+				}
+			}
+		}
+	}
+}
+
+func ReqHandler() {
+	for true {
+		select {
+		case _ = <-reqQueue:
+
+		}
+	}
+}
+
+func NoticeHandler() {
+	for true {
+		select {
+		case _ = <-ntsQueue:
+
+		}
+	}
+}
+
+func MainHandler(c *gin.Context) {
 	body := Models.Message{}
 	err := c.ShouldBindJSON(&body)
 	if err != nil {
-		log.Printf("Error:%s\n", err.Error())
+		log.Println(err)
 		return
 	}
-	if body.PostType == "meta_event" {
-		return
-	}
-	log.Println(body)
-	content := fmt.Sprintln(body)
-	common.TXTWriter(content)
-	echo(body)
+	dataQueue <- body
+
+	//TestPrinter(c)
 }
 
-func echo(body Models.Message) {
-	content := Models.SendMessage{
-		UserID:  body.Sender.UserID,
-		Message: body.Message,
-	}
-	configData, _ := json.Marshal(content)
-	param := bytes.NewBuffer(configData)
-	client := http.DefaultClient
-	req, err := http.NewRequest("POST", url+"/send_private_msg", param)
-	if err != nil {
-		log.Println(err)
-		return
-	}
-	req.Header.Set("Content-Type", contentType)
-	req.Header.Set("Authorization", authorization)
-	res, err := client.Do(req)
-	if err != nil {
-		log.Println(err)
-		return
-	}
-	defer res.Body.Close()
-	result, err := io.ReadAll(res.Body)
-	if err != nil {
-		log.Println(err)
-		return
-	}
-	log.Println(string(result))
+func TestPrinter(c *gin.Context) {
+	data, _ := c.GetRawData()
+	testLog := make(map[string]interface{})
+	_ = json.Unmarshal(data, &testLog)
+	content := fmt.Sprintln(testLog)
+	common.TXTWriter(content)
 }

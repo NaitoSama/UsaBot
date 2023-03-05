@@ -52,3 +52,69 @@ map[interval:5000 meta_event_type:heartbeat post_type:meta_event self_id:1.97520
 {0 message private kkp kkp 1975205178 {Pwww 2471967424} friend 1975205178 1677945432 2471967424}
 {0 message private [CQ:image,file=53923bad96dc2c074d86542e651838c0.image,url=https://c2cpicdw.qpic.cn/offpic_new/2471967424//2471967424-3522861672-53923BAD96DC2C074D86542E651838C0/0?term=2&amp;is_origin=0] [CQ:image,file=53923bad96dc2c074d86542e651838c0.image,url=https://c2cpicdw.qpic.cn/offpic_new/2471967424//2471967424-3522861672-53923BAD96DC2C074D86542E651838C0/0?term=2&amp;is_origin=0] 1975205178 {Pwww 2471967424} friend 1975205178 1677945478 2471967424}
 {0 message group [CQ:image,file=74a0c6b98f67067851192f6d16f04e25.image,subType=0,url=https://gchat.qpic.cn/gchatpic_new/2471967424/4182249427-3121543996-74A0C6B98F67067851192F6D16F04E25/0?term=2&amp;is_origin=0]做个一个echo机器人[CQ:image,file=a42887de9285fed6cfc2905f5a63809e.image,subType=1,url=https://gchat.qpic.cn/gchatpic_new/2471967424/4182249427-2533728704-A42887DE9285FED6CFC2905F5A63809E/0?term=2&amp;is_origin=0]u1s1 go-cqhttp完成度挺高 [CQ:image,file=74a0c6b98f67067851192f6d16f04e25.image,subType=0,url=https://gchat.qpic.cn/gchatpic_new/2471967424/4182249427-3121543996-74A0C6B98F67067851192F6D16F04E25/0?term=2&amp;is_origin=0]做个一个echo机器人[CQ:image,file=a42887de9285fed6cfc2905f5a63809e.image,subType=1,url=https://gchat.qpic.cn/gchatpic_new/2471967424/4182249427-2533728704-A42887DE9285FED6CFC2905F5A63809E/0?term=2&amp;is_origin=0]u1s1 go-cqhttp完成度挺高 1975205178 {Pwww 2471967424} normal 0 1677945538 2471967424}
+{0     0 { 0}  0 0 0}
+{0     0 { 0}  0 0 0}
+{0     0 { 0}  0 0 0}
+{0     0 { 0}  0 0 0}
+{0     0 { 0}  0 0 0}
+{0     0 { 0}  0 0 0}
+{0     0 { 0}  0 0 0}
+{0     0 { 0}  0 0 0}
+{0     0 { 0}  0 0 0}
+{0     0 { 0}  0 0 0}
+{0     0 { 0}  0 0 0}
+{0     0 { 0}  0 0 0}
+{0     0 { 0}  0 0 0}
+{0     0 { 0}  0 0 0}
+{0     0 { 0}  0 0 0}
+{0     0 { 0}  0 0 0}
+{0 meta_event    1975205178 { 0}  0 1677996917 0}
+{0 meta_event    1975205178 { 0}  0 1677996922 0}
+{0 meta_event    1975205178 { 0}  0 1677996927 0}
+{0 meta_event    1975205178 { 0}  0 1677996932 0}
+{0 message private nihao nihao 1975205178 {Pwww 2471967424} friend 1975205178 1677996936 2471967424}
+{0 meta_event    1975205178 { 0}  0 1677996937 0}
+{0 meta_event    1975205178 { 0}  0 1677996942 0}
+{0 meta_event    1975205178 { 0}  0 1677996947 0}
+{0 meta_event    1975205178 { 0}  0 1677996952 0}
+{0 meta_event    1975205178 { 0}  0 1677996957 0}
+{0 meta_event    1975205178 { 0}  0 1677996962 0}
+{0 meta_event    1975205178 { 0}  0 1677996967 0}
+{0 meta_event    1975205178 { 0}  0 1677996972 0}
+{0 meta_event    1975205178 { 0}  0 1677996977 0}
+{0 meta_event    1975205178 { 0}  0 1677996982 0}
+{0 meta_event    1975205178 { 0}  0 1677996987 0}
+{0 meta_event    1975205178 { 0}  0 1677996992 0}
+{0 meta_event    1975205178 { 0}  0 1677996997 0}
+{0 meta_event    1975205178 { 0}  0 1677997002 0}
+{0 meta_event    1975205178 { 0}  0 1677997007 0}
+{0 meta_event    1975205178 { 0}  0 1677997012 0}
+{0 meta_event    1975205178 { 0}  0 1677997017 0}
+{0 meta_event    1975205178 { 0}  0 1677997022 0}
+{0 meta_event    1975205178 { 0}  0 1677997027 0}
+{0 meta_event    1975205178 { 0}  0 1677997032 0}
+{0 meta_event    1975205178 { 0}  0 1677997037 0}
+{0 meta_event    1975205178 { 0}  0 1677997042 0}
+{0 meta_event    1975205178 { 0}  0 1677997047 0}
+{0 meta_event    1975205178 { 0}  0 1677997052 0}
+{0 meta_event    1975205178 { 0}  0 1677997057 0}
+{0 meta_event    1975205178 { 0}  0 1677997062 0}
+{0 meta_event    1975205178 { 0}  0 1677997067 0}
+{0 meta_event    1975205178 { 0}  0 1677997072 0}
+{0 message group [CQ:at,qq=1975205178] kkp [CQ:at,qq=1975205178] kkp 1975205178 {Pwww 2471967424} normal 0 1677997076 2471967424}
+{0 meta_event    1975205178 { 0}  0 1677997077 0}
+{0 meta_event    1975205178 { 0}  0 1677997082 0}
+&{0xc00042e000 <nil> <nil> false true {0 0} true false false 0x1064300}
+&{0xc00042e198 <nil> <nil> false true {0 0} true false false 0x1064300}
+&{0xc00042e1c8 <nil> <nil> false true {0 0} true false false 0x1064300}
+&{0xc00042e1f8 <nil> <nil> false true {0 0} true false false 0x1064300}
+&{0xc000096000 <nil> <nil> false true {0 0} true false false 0x1064300}
+&{0xc000096090 <nil> <nil> false true {0 0} true false false 0x1064300}
+&{0xc000096120 <nil> <nil> false true {0 0} true false false 0x1064300}
+&{0xc000008078 <nil> <nil> false true {0 0} true false false 0x1064300}
+&{0xc000426000 <nil> <nil> false true {0 0} false false false 0xe1c380}
+&{0xc00048e000 <nil> <nil> false true {0 0} false false false 0xe1c380}
+&{0xc0000a4060 <nil> <nil> false true {0 0} false false false 0xe1c380}
+map[interval:5000 meta_event_type:heartbeat post_type:meta_event self_id:1.975205178e+09 status:map[app_enabled:true app_good:true app_initialized:true good:true online:true plugins_good:<nil> stat:map[disconnect_times:0 last_message_time:0 lost_times:0 message_received:0 message_sent:0 packet_lost:0 packet_received:29 packet_sent:20]] time:1.677998191e+09]
+map[interval:5000 meta_event_type:heartbeat post_type:meta_event self_id:1.975205178e+09 status:map[app_enabled:true app_good:true app_initialized:true good:true online:true plugins_good:<nil> stat:map[disconnect_times:0 last_message_time:0 lost_times:0 message_received:0 message_sent:0 packet_lost:0 packet_received:29 packet_sent:20]] time:1.677998196e+09]
+map[anonymous:<nil> font:0 group_id:1.035220273e+09 message:[CQ:at,qq=1975205178] kkp message_id:1.37403353e+09 message_seq:2932 message_type:group post_type:message raw_message:[CQ:at,qq=1975205178] kkp self_id:1.975205178e+09 sender:map[age:0 area: card: level: nickname:Pwww role:owner sex:unknown title: user_id:2.471967424e+09] sub_type:normal time:1.677998197e+09 user_id:2.471967424e+09]

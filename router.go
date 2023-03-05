@@ -7,6 +7,7 @@ import (
 )
 
 func StartServer() {
+	InitServer()
 	r := gin.New()
 	router(r)
 	err := r.Run(":10086")
@@ -17,5 +18,12 @@ func StartServer() {
 }
 
 func router(r *gin.Engine) {
-	r.POST("/", server.MainHandle)
+	r.POST("/", server.MainHandler)
+}
+
+func InitServer() {
+	go server.Router()
+	go server.MsgHandler()
+	go server.ReqHandler()
+	go server.NoticeHandler()
 }
