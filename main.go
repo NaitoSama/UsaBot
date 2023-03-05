@@ -1,5 +1,7 @@
 package main
 
+import "UsaBot/router"
+
 func main() {
-	StartServer()
+	router.StartServer()
 }

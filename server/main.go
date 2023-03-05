@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"log"
+	"strconv"
 	"strings"
 	"sync"
 )
@@ -43,10 +44,20 @@ func MsgHandler() {
 			case "private":
 				echo(body)
 			case "group":
-				if strings.Contains(body.Message, "[CQ:at,qq=1975205178]") {
+				if strings.Contains(body.Message, "[CQ:at,qq="+strconv.FormatInt(body.SelfID, 10)+"]") {
 					if strings.Contains(body.Message, "搜图") {
 						souTu(body)
+					} else {
+						if body.Sender.UserID == 2471967424 && strings.Contains(body.Message, "system") {
+							temp := strings.Split(body.Message, "system")
+							body.Message = strings.Join(temp, "")
+							ChatGPT(body, "system")
+						} else {
+							ChatGPT(body, "user")
+						}
+
 					}
+
 				}
 			}
 		}
