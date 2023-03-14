@@ -13,6 +13,12 @@ import (
 )
 
 func PixivPicGetter(msg Models.Message) {
+	message := Models.SendGroupMessage{
+		GroupID:    msg.GroupID,
+		Message:    "下载中...（如果没有图片那就是被马叔叔吃了）",
+		AutoEscape: false,
+	}
+	common.PostToCQHTTPNoResponse(message, "/send_group_msg")
 	pid, err := PixivPicID(msg.Message)
 	if err != nil {
 		log.Println(err)
@@ -31,7 +37,7 @@ func PixivPicGetter(msg Models.Message) {
 	_, err = os.Stat(picPath)
 	if err != nil {
 		url := "https://pixiv.cat/" + pid + ".png"
-		err = common.DownloadPic(picPath, url)
+		err = common.DownloadPicWithProxy(picPath, url)
 		if err != nil {
 			log.Println(err)
 			common.ErrorResponse(true, msg.GroupID, err)

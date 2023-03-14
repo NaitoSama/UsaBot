@@ -8,7 +8,7 @@ import (
 	"sync"
 )
 
-const url = "http://127.0.0.1:5700"
+const cqurl = "http://127.0.0.1:5700"
 const accessToken = ""
 const contentType = "application/json"
 const authorization = ""
@@ -20,7 +20,7 @@ func PostToCQHTTPNoResponse(content interface{}, path string) {
 	param := bytes.NewBuffer(configData)
 	client := http.DefaultClient
 	lock.RLock()
-	req, err := http.NewRequest("POST", url+path, param)
+	req, err := http.NewRequest("POST", cqurl+path, param)
 	if err != nil {
 		log.Println(err)
 		return
@@ -41,7 +41,7 @@ func PostToCQHTTPWithResponse(content interface{}, path string) (*http.Response,
 	param := bytes.NewBuffer(configData)
 	client := http.DefaultClient
 	lock.RLock()
-	req, err := http.NewRequest("POST", url+path, param)
+	req, err := http.NewRequest("POST", cqurl+path, param)
 	if err != nil {
 		log.Println(err)
 		return nil, err
