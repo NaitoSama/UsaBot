@@ -47,6 +47,8 @@ func MsgHandler() {
 				if strings.Contains(body.Message, "[CQ:at,qq="+strconv.FormatInt(body.SelfID, 10)+"]") {
 					if strings.Contains(body.Message, "搜图") {
 						souTu(body)
+					} else if strings.Contains(body.Message, "提取图片") {
+						PixivPicGetter(body)
 					} else {
 						if body.Sender.UserID == 2471967424 && strings.Contains(body.Message, "system") {
 							temp := strings.Split(body.Message, "system")
