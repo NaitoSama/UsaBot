@@ -15,7 +15,7 @@ func DownloadPic(savePath string, url string) error {
 	if err != nil {
 		return err
 	}
-	err = os.WriteFile(savePath, data, 0777)
+	err = os.WriteFile(savePath, data, 0666)
 	if err != nil {
 		return err
 	}
