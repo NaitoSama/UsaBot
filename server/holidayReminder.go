@@ -7,11 +7,13 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"log"
 	"strconv"
 	"strings"
 	"time"
 )
 
+// HolidayReminder 节假日定时提醒 返回消息string
 func HolidayReminder() (string, error) {
 	year := time.Now().Year()
 	url := fmt.Sprintf("http://api.apihubs.cn/holiday/get?field=date,holiday,holiday_recess,yearday&year=%d&holiday=99&holiday_recess=1&lunar=1&order_by=1&cn=1&size=100", year)
@@ -70,4 +72,22 @@ func HolidayReminder() (string, error) {
 	contentList = append(contentList, temp)
 	content := strings.Join(contentList, "\n")
 	return content, nil
+}
+
+// HolidayReminderTask 给多个群发送节假日信息
+func HolidayReminderTask(groupNum []int64) {
+	msg, err := HolidayReminder()
+	if err != nil {
+		log.Println(err)
+		return
+	}
+	for _, v := range groupNum {
+		content := Models.SendGroupMessage{
+			GroupID:    v,
+			Message:    msg,
+			AutoEscape: false,
+		}
+		common.PostToCQHTTPNoResponse(content, "/send_group_msg")
+		time.Sleep(time.Second)
+	}
 }
