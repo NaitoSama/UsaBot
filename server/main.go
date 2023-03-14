@@ -49,6 +49,8 @@ func MsgHandler() {
 						souTu(body)
 					} else if strings.Contains(body.Message, "提取图片") {
 						PixivPicGetter(body)
+					} else if strings.Contains(body.Message, "来点") {
+						RandomSetu(body)
 					} else {
 						if body.Sender.UserID == 2471967424 && strings.Contains(body.Message, "system") {
 							temp := strings.Split(body.Message, "system")
