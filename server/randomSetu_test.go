@@ -8,9 +8,9 @@ import (
 )
 
 func Test001(t *testing.T) {
-	content := "来点pcr色图"
+	content := "来点凯露色图"
 
-	regl := regexp.MustCompile("来点\\w*[色涩瑟]图")
+	regl := regexp.MustCompile("来点.*[色涩瑟]图")
 	if regl == nil {
 		log.Println("正则解析失败")
 		return

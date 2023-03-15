@@ -34,3 +34,15 @@ type SendGroupMessage struct {
 	Message    string `json:"message"`
 	AutoEscape bool   `json:"auto_escape,omitempty"` // 是否以纯文本发送，只在message为string有效
 }
+
+type SendGroupMessageResponse struct {
+	Data    SendGroupMessageResponseData `json:"data,omitempty"`
+	RetCode int                          `json:"retcode"`
+	Status  string                       `json:"status"`            // 执行成功-ok 执行失败-failed
+	Msg     string                       `json:"msg,omitempty"`     // 错误信息
+	Wording string                       `json:"wording,omitempty"` // 具体错误信息
+}
+
+type SendGroupMessageResponseData struct {
+	MessageID int64 `json:"message_id"`
+}

@@ -8,6 +8,7 @@ import (
 	"strings"
 )
 
+// souTu 搜图 使用saucenao引擎
 func souTu(msg Models.Message) {
 	if msg.MessageType == "private" {
 		common.ErrorResponse(false, msg.Sender.UserID, errors.New("暂不支持私聊搜图/汪汪"))

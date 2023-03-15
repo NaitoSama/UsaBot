@@ -11,7 +11,7 @@ import (
 	"strconv"
 )
 
-// RandomSetu 随机涩图
+// RandomSetu 随机涩图 从lolicon api获取图片
 func RandomSetu(msg Models.Message) {
 	message1 := Models.SendGroupMessage{
 		GroupID: msg.GroupID,
@@ -24,6 +24,7 @@ func RandomSetu(msg Models.Message) {
 		common.ErrorResponse(true, msg.GroupID, err)
 		return
 	}
+	// 获取图片
 	setu, err := requestLoliconApi(tag)
 	if err != nil {
 		log.Println(err)
@@ -36,12 +37,36 @@ func RandomSetu(msg Models.Message) {
 		GroupID: msg.GroupID,
 		Message: content,
 	}
-	common.PostToCQHTTPNoResponse(message, "/send_group_msg")
+	response, err := common.PostToCQHTTPWithResponse(message, "/send_group_msg")
+	if err != nil {
+		log.Println(err)
+		common.ErrorResponse(true, msg.GroupID, err)
+		return
+	}
+	defer response.Body.Close()
+	respData, err := io.ReadAll(response.Body)
+	if err != nil {
+		log.Println(err)
+		common.ErrorResponse(true, msg.GroupID, err)
+		return
+	}
+
+	respStruct := Models.SendGroupMessageResponse{}
+	err = json.Unmarshal(respData, &respStruct)
+
+	// 发送失败判断
+	if respStruct.Status != "ok" {
+		message = Models.SendGroupMessage{
+			GroupID: msg.GroupID,
+			Message: "涩图太涩捏，发不出来，错误信息：" + respStruct.Wording,
+		}
+		common.PostToCQHTTPNoResponse(message, "/send_group_msg")
+	}
 }
 
 // parseMsg 解析msg 如果有tag返回，否则返回空字符串
 func parseMsg(msg Models.Message) (string, error) {
-	regl := regexp.MustCompile("来点\\w*[色涩瑟]图")
+	regl := regexp.MustCompile("来点.*[色涩瑟]图")
 	if regl == nil {
 		log.Println("正则解析失败")
 		return "", errors.New("正则解析失败")
