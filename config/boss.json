@@ -1,0 +1,46 @@
+{
+  "boss_HP": {
+    "one": {
+      "first_stage": 6000000,
+      "second_stage": 6000000,
+      "third_stage": 12000000,
+      "fourth_stage": 22000000,
+      "fifth_stage": 145000000
+    },
+    "two": {
+      "first_stage": 8000000,
+      "second_stage": 8000000,
+      "third_stage": 14000000,
+      "fourth_stage": 23000000,
+      "fifth_stage": 150000000
+    },
+    "three": {
+      "first_stage": 10000000,
+      "second_stage": 10000000,
+      "third_stage": 17000000,
+      "fourth_stage": 27000000,
+      "fifth_stage": 175000000
+    },
+    "four": {
+      "first_stage": 12000000,
+      "second_stage": 12000000,
+      "third_stage": 19000000,
+      "fourth_stage": 29000000,
+      "fifth_stage": 195000000
+    },
+    "five": {
+      "first_stage": 15000000,
+      "second_stage": 15000000,
+      "third_stage": 22000000,
+      "fourth_stage": 31000000,
+      "fifth_stage": 210000000
+    }
+  },
+  "boss_stage": {
+    "first_stage": "1-4",
+    "second_stage": "5-10",
+    "third_stage": "11-30",
+    "fourth_stage": "31-34",
+    "fifth_stage": "35-200"
+  }
+}
