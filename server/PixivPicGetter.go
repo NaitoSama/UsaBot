@@ -3,6 +3,7 @@ package server
 import (
 	"UsaBot/Models"
 	"UsaBot/common"
+	"UsaBot/config"
 	"encoding/base64"
 	"encoding/json"
 	"errors"
@@ -38,7 +39,7 @@ func PixivPicGetter(msg Models.Message) {
 
 	_, err = os.Stat(picPath)
 	if err != nil {
-		url := "https://pixiv.cat/" + pid + ".png"
+		url := config.Config.PixivPicGetter.PixivProxy + pid + ".png"
 		err = common.DownloadPicWithProxy(picPath, url)
 		if err != nil {
 			log.Println(err)

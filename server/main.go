@@ -3,6 +3,7 @@ package server
 import (
 	"UsaBot/Models"
 	"UsaBot/common"
+	"UsaBot/config"
 	"encoding/json"
 	"fmt"
 	"github.com/gin-gonic/gin"
@@ -47,9 +48,9 @@ func MsgHandler() {
 				if strings.Contains(body.Message, "[CQ:at,qq="+strconv.FormatInt(body.SelfID, 10)+"]") {
 					if strings.Contains(body.Message, "搜图") {
 						souTu(body)
-					} else if strings.Contains(body.Message, "提取图片") {
+					} else if config.Config.PixivPicGetter.Enable && strings.Contains(body.Message, "提取图片") {
 						PixivPicGetter(body)
-					} else if strings.Contains(body.Message, "来点") {
+					} else if config.Config.RandomSetu.Enable && strings.Contains(body.Message, "来点") {
 						RandomSetu(body)
 					} else {
 						if body.Sender.UserID == 2471967424 && strings.Contains(body.Message, "system") {

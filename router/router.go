@@ -2,6 +2,7 @@ package router
 
 import (
 	"UsaBot/common"
+	"UsaBot/config"
 	"UsaBot/server"
 	"github.com/gin-gonic/gin"
 )
@@ -31,9 +32,10 @@ func InitServer() {
 
 // scheduleTask 添加计划任务
 func scheduleTask() {
-	groupNum := []int64{1036326321, 292249427}
-	//groups := []int64{1036326321}
-	common.ScheduleClient.Every(1).Day().At("14:00").Do(func() { server.HolidayReminderTask(groupNum) })
-	common.ScheduleClient.Every(1).Day().At("08:00").Do(func() { server.DailyNews(groupNum) })
-
+	if config.Config.HolidayRemainder.Enable {
+		common.ScheduleClient.Every(1).Day().At(config.Config.HolidayRemainder.Time).Do(func() { server.HolidayReminderTask(config.Config.HolidayRemainder.GroupList) })
+	}
+	if config.Config.DailyNews.Enable {
+		common.ScheduleClient.Every(1).Day().At(config.Config.DailyNews.Time).Do(func() { server.DailyNews(config.Config.DailyNews.GroupList) })
+	}
 }

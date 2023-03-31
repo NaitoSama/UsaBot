@@ -14,12 +14,13 @@ func init() {
 	}
 }
 
+// todo 搜图和chatgpt还没改
 type config struct {
-	DailyNews
-	HolidayRemainder
-	PixivPicGetter
-	RandomSetu
-	Soutu
+	DailyNews        DailyNews
+	HolidayRemainder HolidayRemainder
+	PixivPicGetter   PixivPicGetter
+	RandomSetu       RandomSetu
+	Soutu            Soutu
 }
 
 type DailyNews struct {
