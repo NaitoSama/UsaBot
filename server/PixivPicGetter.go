@@ -40,7 +40,11 @@ func PixivPicGetter(msg Models.Message) {
 	_, err = os.Stat(picPath)
 	if err != nil {
 		url := config.Config.PixivPicGetter.PixivProxy + pid + ".png"
-		err = common.DownloadPicWithProxy(picPath, url)
+		if config.Config.PixivPicGetter.UseProxy {
+			err = common.DownloadPicWithProxy(picPath, url)
+		} else {
+			err = common.DownloadPic(picPath, url)
+		}
 		if err != nil {
 			log.Println(err)
 			common.ErrorResponse(true, msg.GroupID, err)

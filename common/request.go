@@ -1,6 +1,7 @@
 package common
 
 import (
+	"UsaBot/config"
 	"bytes"
 	"encoding/json"
 	"net/http"
@@ -66,7 +67,7 @@ func RequestTOWithProxy(urlS string, method string, contentType string, payload 
 		}
 	}
 
-	proxyUrl, _ := url.Parse("http://localhost:1080")
+	proxyUrl, _ := url.Parse(config.Config.General.Proxy)
 	transport := &http.Transport{
 		Proxy: http.ProxyURL(proxyUrl),
 	}

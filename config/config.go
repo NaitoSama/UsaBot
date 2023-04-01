@@ -15,6 +15,7 @@ func init() {
 }
 
 type config struct {
+	General          General
 	ChatGPT          ChatGPT
 	DailyNews        DailyNews
 	HolidayRemainder HolidayRemainder
@@ -23,11 +24,16 @@ type config struct {
 	Soutu            Soutu
 }
 
+type General struct {
+	HttpPort  int
+	CQHttpUrl string
+	Proxy     string
+}
+
 type ChatGPT struct {
 	Enable      bool
 	Model       string
 	UseProxy    bool
-	Proxy       string
 	Url         string
 	AccessToken string
 }
@@ -47,6 +53,7 @@ type HolidayRemainder struct {
 type PixivPicGetter struct {
 	Enable     bool
 	PixivProxy string
+	UseProxy   bool
 }
 
 type RandomSetu struct {

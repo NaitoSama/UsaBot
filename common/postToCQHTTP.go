@@ -1,6 +1,7 @@
 package common
 
 import (
+	"UsaBot/config"
 	"bytes"
 	"encoding/json"
 	"log"
@@ -8,7 +9,8 @@ import (
 	"sync"
 )
 
-const cqurl = "http://127.0.0.1:5700"
+var cqurl = config.Config.General.CQHttpUrl
+
 const accessToken = ""
 const contentType = "application/json"
 const authorization = ""

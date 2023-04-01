@@ -1,8 +1,12 @@
+[General]
+HttpPort = 10086
+CQHttpUrl = "http://127.0.0.1:5700"
+Proxy = "http://localhost:1080"
+
 [ChatGPT]
 Enable = true
 Model = "gpt-3.5-turbo"
 UseProxy = true
-Proxy = "http://localhost:1080"
 Url = "https://api.openai.com/v1/chat/completions"
 AccessToken = "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"
 
@@ -19,6 +23,7 @@ GroupList = [1036326321, 292249427]
 [PixivPicGetter]
 Enable = true
 PixivProxy = "https://pixiv.re/"
+UseProxy = false
 
 [RandomSetu]
 Enable = true

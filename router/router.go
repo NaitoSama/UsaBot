@@ -5,6 +5,7 @@ import (
 	"UsaBot/config"
 	"UsaBot/server"
 	"github.com/gin-gonic/gin"
+	"strconv"
 )
 
 func StartServer() {
@@ -12,7 +13,7 @@ func StartServer() {
 	scheduleTask()
 	r := gin.New()
 	router(r)
-	err := r.Run(":10086")
+	err := r.Run(":" + strconv.Itoa(config.Config.General.HttpPort))
 	if err != nil {
 		common.ErrorHandle(err)
 		return

@@ -30,7 +30,7 @@ func ChatGPT(msg Models.Message, role string) {
 	param := bytes.NewBuffer(data)
 
 	if config.Config.ChatGPT.UseProxy {
-		proxyUrl, _ := url.Parse(config.Config.ChatGPT.Proxy)
+		proxyUrl, _ := url.Parse(config.Config.General.Proxy)
 		transport := &http.Transport{
 			Proxy: http.ProxyURL(proxyUrl),
 		}
