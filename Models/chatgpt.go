@@ -1,5 +1,20 @@
 package Models
 
+import "gorm.io/gorm"
+
+var ChatGPTUsers = make(map[int64]ChatGPTUserInfo)
+
+func init() {
+	var user []ChatGPTUserInfo
+	result := DB.Find(&user)
+	if result.Error != nil {
+		panic("failed to find user info")
+	}
+	for _, v := range user {
+		ChatGPTUsers[v.User] = v
+	}
+}
+
 type ChatGPT struct {
 	Model    string           `json:"model"` // 模型 一般为 “gpt-3.5-turbo”
 	Messages []ChatGPTMessage `json:"messages"`
@@ -29,4 +44,27 @@ type ChatGPTChoice struct {
 	Message      ChatGPTMessage `json:"message"`
 	FinishReason string         `json:"finish_reason"`
 	Index        int            `json:"index"`
+}
+
+type ChatGPTContext struct {
+	gorm.Model
+	Role    string
+	Content string
+	User    int64
+	State   string
+}
+
+func (*ChatGPTContext) TableName() string {
+	return "chatgpt_context"
+}
+
+type ChatGPTUserInfo struct {
+	gorm.Model
+	User          int64
+	EnableContext bool
+	MaxContexts   int
+}
+
+func (*ChatGPTUserInfo) TableName() string {
+	return "chatgpt_user_info"
 }

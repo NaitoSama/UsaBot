@@ -5,6 +5,7 @@ import (
 	"UsaBot/common"
 	"UsaBot/config"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"log"
@@ -53,13 +54,61 @@ func MsgHandler() {
 					} else if config.Config.RandomSetu.Enable && strings.Contains(body.Message, "来点") {
 						RandomSetu(body)
 					} else if config.Config.ChatGPT.Enable {
-						if body.Sender.UserID == 2471967424 && strings.Contains(body.Message, "system") {
-							temp := strings.Split(body.Message, "system")
-							body.Message = strings.Join(temp, "")
-							ChatGPT(body, "system")
+
+						lock.RLock()
+						user, ok := Models.ChatGPTUsers[body.Sender.UserID]
+						if !ok {
+							user = Models.ChatGPTUserInfo{
+								User:          body.Sender.UserID,
+								EnableContext: false,
+								MaxContexts:   50,
+							}
+							Models.ChatGPTUsers[body.Sender.UserID] = user
+							Models.DB.Create(&user)
+						}
+						lock.RUnlock()
+
+						var count int64
+						Models.DB.Model(Models.ChatGPTContext{}).Where("user = ? and state = ?", user.User, "enable").Count(&count)
+
+						if count >= int64(user.MaxContexts) {
+							common.ErrorResponse(true, body.GroupID, errors.New("您的上下文数量已达上限,现在为您进行清除"))
+							Models.DB.Model(&Models.ChatGPTContext{}).Where("user = ? and state = ?", user.User, "enable").Update("state", "disable")
+							count = 0
+						}
+
+						if strings.Contains(body.Message, "[AI]") {
+							temp := fmt.Sprintf("[CQ:at,qq=%d] \n用户：%d\n是否开启上下文：%t\n上下文总额度：%d\n剩余额度：%d\n回复“[清空上下文]”可以重置聊天哦", body.Sender.UserID, body.Sender.UserID, user.EnableContext, user.MaxContexts, count)
+							replyContent := Models.SendGroupMessage{
+								GroupID: body.GroupID,
+								Message: temp,
+							}
+							common.PostToCQHTTPNoResponse(replyContent, "/send_group_msg")
+							return
+						}
+
+						if strings.Contains(body.Message, "[清空上下文]") {
+							Models.DB.Model(&Models.ChatGPTContext{}).Where("user = ? and state = ?", user.User, "enable").Update("state", "disable")
+							common.PostToCQHTTPNoResponse(Models.SendGroupMessage{
+								GroupID: body.GroupID,
+								Message: "清除完了哦",
+							}, "/send_group_msg")
+							return
+						}
+
+						if user.EnableContext {
+							ChatWithContext(body, user)
 						} else {
 							ChatGPT(body, "user")
 						}
+
+						//if body.Sender.UserID == 2471967424 && strings.Contains(body.Message, "system") {
+						//	temp := strings.Split(body.Message, "system")
+						//	body.Message = strings.Join(temp, "")
+						//	ChatGPT(body, "system")
+						//} else {
+						//	ChatGPT(body, "user")
+						//}
 
 					}
 
