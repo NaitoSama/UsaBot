@@ -46,13 +46,13 @@ func MsgHandler() {
 				echo(body)
 			case "group":
 				if strings.Contains(body.Message, "[CQ:at,qq="+strconv.FormatInt(body.SelfID, 10)+"]") {
-					if strings.Contains(body.Message, "搜图") {
+					if config.Config.Soutu.Enable && strings.Contains(body.Message, "搜图") {
 						souTu(body)
 					} else if config.Config.PixivPicGetter.Enable && strings.Contains(body.Message, "提取图片") {
 						PixivPicGetter(body)
 					} else if config.Config.RandomSetu.Enable && strings.Contains(body.Message, "来点") {
 						RandomSetu(body)
-					} else {
+					} else if config.Config.ChatGPT.Enable {
 						if body.Sender.UserID == 2471967424 && strings.Contains(body.Message, "system") {
 							temp := strings.Split(body.Message, "system")
 							body.Message = strings.Join(temp, "")

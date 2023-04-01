@@ -2,6 +2,7 @@ package common
 
 import (
 	"UsaBot/Models"
+	"UsaBot/config"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -10,9 +11,9 @@ import (
 	"time"
 )
 
-const (
-	saucenaoApi    = "https://saucenao.com/search.php"
-	saucenaoApiKey = "2eb0f118fea7cc6bf5ea95a6a0badf0c69ea0780"
+var (
+	saucenaoApi    = config.Config.Soutu.SaucenaoApi
+	saucenaoApiKey = config.Config.Soutu.SaucenaoApiKey
 )
 
 func SauceNao(picUrl string, numres int) (*Models.SauceNao, error) {

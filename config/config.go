@@ -14,13 +14,22 @@ func init() {
 	}
 }
 
-// todo 搜图和chatgpt还没改
 type config struct {
+	ChatGPT          ChatGPT
 	DailyNews        DailyNews
 	HolidayRemainder HolidayRemainder
 	PixivPicGetter   PixivPicGetter
 	RandomSetu       RandomSetu
 	Soutu            Soutu
+}
+
+type ChatGPT struct {
+	Enable      bool
+	Model       string
+	UseProxy    bool
+	Proxy       string
+	Url         string
+	AccessToken string
 }
 
 type DailyNews struct {

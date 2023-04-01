@@ -3,6 +3,7 @@ package server
 import (
 	"UsaBot/Models"
 	"UsaBot/common"
+	"UsaBot/config"
 	"errors"
 	"fmt"
 	"strings"
@@ -23,7 +24,7 @@ func souTu(msg Models.Message) {
 
 	common.PostToCQHTTPNoResponse(Models.SendGroupMessage{GroupID: msg.GroupID, Message: "查询中"}, "/send_group_msg")
 
-	result, err := common.SauceNao(picUrl, 3)
+	result, err := common.SauceNao(picUrl, config.Config.Soutu.Results)
 	if err != nil {
 		common.ErrorResponse(true, msg.GroupID, err)
 		return

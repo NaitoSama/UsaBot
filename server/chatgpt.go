@@ -3,6 +3,7 @@ package server
 import (
 	"UsaBot/Models"
 	"UsaBot/common"
+	"UsaBot/config"
 	"bytes"
 	"encoding/json"
 	"fmt"
@@ -14,31 +15,39 @@ import (
 )
 
 func ChatGPT(msg Models.Message, role string) {
+	var client *http.Client
+
 	message := msg.Message[strings.Index(msg.Message, "]")+1:]
 	msgContent := Models.ChatGPTMessage{
 		Role:    role,
 		Content: message,
 	}
 	content := Models.ChatGPT{
-		Model:    "gpt-3.5-turbo",
+		Model:    config.Config.ChatGPT.Model,
 		Messages: []Models.ChatGPTMessage{msgContent},
 	}
 	data, _ := json.Marshal(content)
 	param := bytes.NewBuffer(data)
-	proxyUrl, _ := url.Parse("http://localhost:1080")
-	transport := &http.Transport{
-		Proxy: http.ProxyURL(proxyUrl),
+
+	if config.Config.ChatGPT.UseProxy {
+		proxyUrl, _ := url.Parse(config.Config.ChatGPT.Proxy)
+		transport := &http.Transport{
+			Proxy: http.ProxyURL(proxyUrl),
+		}
+		client = &http.Client{
+			Transport: transport,
+		}
+	} else {
+		client = &http.Client{}
 	}
-	client := &http.Client{
-		Transport: transport,
-	}
-	req, err := http.NewRequest("POST", "https://api.openai.com/v1/chat/completions", param)
+
+	req, err := http.NewRequest("POST", config.Config.ChatGPT.Url, param)
 	if err != nil {
 		log.Println(err)
 		return
 	}
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Authorization", "Bearer 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")
+	req.Header.Set("Authorization", "Bearer "+config.Config.ChatGPT.AccessToken)
 	res, err := client.Do(req)
 	if err != nil {
 		log.Println(err)
