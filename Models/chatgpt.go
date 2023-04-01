@@ -1,19 +1,21 @@
 package Models
 
-import "gorm.io/gorm"
+import (
+	"gorm.io/gorm"
+)
 
 var ChatGPTUsers = make(map[int64]ChatGPTUserInfo)
 
-func init() {
-	var user []ChatGPTUserInfo
-	result := DB.Find(&user)
-	if result.Error != nil {
-		panic("failed to find user info")
-	}
-	for _, v := range user {
-		ChatGPTUsers[v.User] = v
-	}
-}
+//func init() {
+//	//var user []ChatGPTUserInfo
+//	//result := DB.Model(ChatGPTUserInfo{}).Find(&user)
+//	//if result.Error != nil {
+//	//	panic("failed to find user info")
+//	//}
+//	//for _, v := range user {
+//	//	ChatGPTUsers[v.User] = v
+//	//}
+//}
 
 type ChatGPT struct {
 	Model    string           `json:"model"` // 模型 一般为 “gpt-3.5-turbo”

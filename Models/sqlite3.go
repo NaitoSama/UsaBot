@@ -19,4 +19,12 @@ func init() {
 		return
 	}
 	DB = db
+	var user []ChatGPTUserInfo
+	result := DB.Find(&user)
+	if result.Error != nil {
+		panic("failed to find user info")
+	}
+	for _, v := range user {
+		ChatGPTUsers[v.User] = v
+	}
 }
