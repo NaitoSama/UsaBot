@@ -8,7 +8,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"log"
 	"net/http"
 	"net/url"
 	"strings"
@@ -43,27 +42,27 @@ func ChatGPT(msg Models.Message, role string) {
 
 	req, err := http.NewRequest("POST", config.Config.ChatGPT.Url, param)
 	if err != nil {
-		log.Println(err)
+		common.Logln(2, err)
 		return
 	}
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Authorization", "Bearer "+config.Config.ChatGPT.AccessToken)
 	res, err := client.Do(req)
 	if err != nil {
-		log.Println(err)
+		common.Logln(2, err)
 		return
 	}
 	defer res.Body.Close()
 	resData, err := io.ReadAll(res.Body)
 	if err != nil {
-		log.Println(err)
+		common.Logln(2, err)
 		common.ErrorResponse(true, msg.GroupID, err)
 		return
 	}
 	chatGPTresponse := Models.ChatGPTResponse{}
 	err = json.Unmarshal(resData, &chatGPTresponse)
 	if err != nil {
-		log.Println(err)
+		common.Logln(2, err)
 		common.ErrorResponse(true, msg.GroupID, err)
 		return
 	}
@@ -131,27 +130,27 @@ func ChatWithContext(msg Models.Message, user Models.ChatGPTUserInfo) {
 
 	req, err := http.NewRequest("POST", config.Config.ChatGPT.Url, param)
 	if err != nil {
-		log.Println(err)
+		common.Logln(2, err)
 		return
 	}
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Authorization", "Bearer "+config.Config.ChatGPT.AccessToken)
 	res, err := client.Do(req)
 	if err != nil {
-		log.Println(err)
+		common.Logln(2, err)
 		return
 	}
 	defer res.Body.Close()
 	resData, err := io.ReadAll(res.Body)
 	if err != nil {
-		log.Println(err)
+		common.Logln(2, err)
 		common.ErrorResponse(true, msg.GroupID, err)
 		return
 	}
 	chatGPTresponse := Models.ChatGPTResponse{}
 	err = json.Unmarshal(resData, &chatGPTresponse)
 	if err != nil {
-		log.Println(err)
+		common.Logln(2, err)
 		common.ErrorResponse(true, msg.GroupID, err)
 		return
 	}

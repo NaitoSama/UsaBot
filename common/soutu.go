@@ -6,7 +6,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"log"
 	"net/http"
 	"time"
 )
@@ -23,19 +22,19 @@ func SauceNao(picUrl string, numres int) (*Models.SauceNao, error) {
 	client := http.Client{Timeout: 10 * time.Second}
 	res, err := client.Get(reqUrl)
 	if err != nil {
-		log.Println(err)
+		Logln(2, err)
 		return nil, err
 	}
 	defer res.Body.Close()
 	data, err := io.ReadAll(res.Body)
 	if err != nil {
-		log.Println(err)
+		Logln(2, err)
 		return nil, err
 	}
 	result := Models.SauceNao{Header: Models.SauceNaoHeader{Status: -1}}
 	err = json.Unmarshal(data, &result)
 	if err != nil {
-		log.Println(err)
+		Logln(2, err)
 		return nil, err
 	}
 	return &result, nil

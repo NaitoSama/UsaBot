@@ -7,7 +7,6 @@ import (
 	"errors"
 	"fmt"
 	"io"
-	"log"
 	"strconv"
 	"strings"
 	"time"
@@ -78,7 +77,7 @@ func HolidayReminder() (string, error) {
 func HolidayReminderTask(groupNum []int64) {
 	msg, err := HolidayReminder()
 	if err != nil {
-		log.Println(err)
+		common.Logln(2, err)
 		return
 	}
 	for _, v := range groupNum {

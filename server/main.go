@@ -8,7 +8,6 @@ import (
 	"errors"
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"log"
 	"strconv"
 	"strings"
 	"sync"
@@ -140,7 +139,7 @@ func MainHandler(c *gin.Context) {
 	body := Models.Message{}
 	err := c.ShouldBindJSON(&body)
 	if err != nil {
-		log.Println(err)
+		common.Logln(2, err)
 		return
 	}
 	dataQueue <- body

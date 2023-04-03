@@ -6,7 +6,6 @@ import (
 	"encoding/json"
 	"errors"
 	"io"
-	"log"
 	"regexp"
 	"strconv"
 )
@@ -20,14 +19,14 @@ func RandomSetu(msg Models.Message) {
 	common.PostToCQHTTPNoResponse(message1, "/send_group_msg")
 	tag, err := parseMsg(msg)
 	if err != nil {
-		log.Println(err)
+		common.Logln(2, err)
 		common.ErrorResponse(true, msg.GroupID, err)
 		return
 	}
 	// 获取图片
 	setu, err := requestLoliconApi(tag)
 	if err != nil {
-		log.Println(err)
+		common.Logln(2, err)
 		common.ErrorResponse(true, msg.GroupID, err)
 		return
 	}
@@ -39,14 +38,14 @@ func RandomSetu(msg Models.Message) {
 	}
 	response, err := common.PostToCQHTTPWithResponse(message, "/send_group_msg")
 	if err != nil {
-		log.Println(err)
+		common.Logln(2, err)
 		common.ErrorResponse(true, msg.GroupID, err)
 		return
 	}
 	defer response.Body.Close()
 	respData, err := io.ReadAll(response.Body)
 	if err != nil {
-		log.Println(err)
+		common.Logln(2, err)
 		common.ErrorResponse(true, msg.GroupID, err)
 		return
 	}
@@ -68,7 +67,7 @@ func RandomSetu(msg Models.Message) {
 func parseMsg(msg Models.Message) (string, error) {
 	regl := regexp.MustCompile("来点.*[色涩瑟]图")
 	if regl == nil {
-		log.Println("正则解析失败")
+		common.Logln(2, "正则解析失败")
 		return "", errors.New("正则解析失败")
 	}
 	result := regl.FindAllStringSubmatch(msg.Message, -1)

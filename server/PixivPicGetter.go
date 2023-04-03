@@ -9,7 +9,6 @@ import (
 	"errors"
 	_ "image/png"
 	"io"
-	"log"
 	"os"
 	"regexp"
 )
@@ -24,14 +23,14 @@ func PixivPicGetter(msg Models.Message) {
 	common.PostToCQHTTPNoResponse(message, "/send_group_msg")
 	pid, err := PixivPicID(msg.Message)
 	if err != nil {
-		log.Println(err)
+		common.Logln(2, err)
 		common.ErrorResponse(true, msg.GroupID, err)
 		return
 	}
 	// 图片下载
 	pwd, err := os.Getwd()
 	if err != nil {
-		log.Println(err)
+		common.Logln(2, err)
 		common.ErrorResponse(true, msg.GroupID, err)
 		return
 	}
@@ -46,7 +45,7 @@ func PixivPicGetter(msg Models.Message) {
 			err = common.DownloadPic(picPath, url)
 		}
 		if err != nil {
-			log.Println(err)
+			common.Logln(2, err)
 			common.ErrorResponse(true, msg.GroupID, err)
 			return
 		}
@@ -55,7 +54,7 @@ func PixivPicGetter(msg Models.Message) {
 	// 发送
 	err = readPicAndSend(picPath, msg, pid)
 	if err != nil {
-		log.Println(err)
+		common.Logln(2, err)
 		common.ErrorResponse(true, msg.GroupID, err)
 		return
 	}
@@ -66,7 +65,7 @@ func PixivPicGetter(msg Models.Message) {
 func PixivPicID(message string) (string, error) {
 	regl := regexp.MustCompile(`pid[0-9]+`)
 	if regl == nil {
-		log.Println("正则解析失败")
+		common.Logln(2, "正则解析失败")
 		return "", errors.New("正则解析失败")
 	}
 	result := regl.FindAllStringSubmatch(message, -1)

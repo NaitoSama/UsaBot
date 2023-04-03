@@ -1,6 +1,7 @@
 package config
 
 import (
+	"UsaBot/common"
 	"github.com/BurntSushi/toml"
 )
 
@@ -9,6 +10,7 @@ var Config config
 func init() {
 	_, err := toml.DecodeFile("./config/config.toml", &Config)
 	if err != nil {
+		common.Logln(2, err)
 		panic(err)
 		return
 	}

@@ -4,7 +4,6 @@ import (
 	"UsaBot/config"
 	"bytes"
 	"encoding/json"
-	"log"
 	"net/http"
 	"sync"
 )
@@ -24,7 +23,7 @@ func PostToCQHTTPNoResponse(content interface{}, path string) {
 	lock.RLock()
 	req, err := http.NewRequest("POST", cqurl+path, param)
 	if err != nil {
-		log.Println(err)
+		Logln(2, err)
 		return
 	}
 	req.Header.Set("Content-Type", contentType)
@@ -32,7 +31,7 @@ func PostToCQHTTPNoResponse(content interface{}, path string) {
 	lock.RUnlock()
 	res, err := client.Do(req)
 	if err != nil {
-		log.Println(err)
+		Logln(2, err)
 		return
 	}
 	defer res.Body.Close()
@@ -45,7 +44,7 @@ func PostToCQHTTPWithResponse(content interface{}, path string) (*http.Response,
 	lock.RLock()
 	req, err := http.NewRequest("POST", cqurl+path, param)
 	if err != nil {
-		log.Println(err)
+		Logln(2, err)
 		return nil, err
 	}
 	req.Header.Set("Content-Type", contentType)
@@ -53,7 +52,7 @@ func PostToCQHTTPWithResponse(content interface{}, path string) (*http.Response,
 	lock.RUnlock()
 	res, err := client.Do(req)
 	if err != nil {
-		log.Println(err)
+		Logln(2, err)
 		return nil, err
 	}
 	return res, nil

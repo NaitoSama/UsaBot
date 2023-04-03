@@ -18,6 +18,13 @@ func StartServer() {
 		common.ErrorHandle(err)
 		return
 	}
+	defer func() {
+		err1 := recover()
+		if err1 != nil {
+
+		}
+
+	}()
 }
 
 func router(r *gin.Engine) {
