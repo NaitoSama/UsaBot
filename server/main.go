@@ -77,7 +77,7 @@ func MsgHandler() {
 						}
 
 						if strings.Contains(body.Message, "&#91;AI&#93;") {
-							temp := fmt.Sprintf("[CQ:at,qq=%d] \n用户：%d\n是否开启上下文：%t\n上下文总额度：%d\n剩余额度：%d\n回复“[清空上下文]”可以重置聊天哦", body.Sender.UserID, body.Sender.UserID, user.EnableContext, user.MaxContexts, int64(user.MaxContexts)-count)
+							temp := fmt.Sprintf("[CQ:at,qq=%d] \n用户：%d\n是否开启上下文：%t\n上下文总额度：%d\n剩余额度：%d\n输入带有[设定]可以diy回复\n回复[开启上下文]启用聊天记忆\n回复[关闭上下文]停用聊天记忆\n回复“[清空上下文]”重置聊天", body.Sender.UserID, body.Sender.UserID, user.EnableContext, user.MaxContexts, int64(user.MaxContexts)-count)
 							replyContent := Models.SendGroupMessage{
 								GroupID: body.GroupID,
 								Message: temp,
