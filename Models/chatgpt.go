@@ -7,14 +7,14 @@ import (
 var ChatGPTUsers = make(map[int64]ChatGPTUserInfo)
 
 //func init() {
-//	//var user []ChatGPTUserInfo
-//	//result := DB.Model(ChatGPTUserInfo{}).Find(&user)
-//	//if result.Error != nil {
-//	//	panic("failed to find user info")
-//	//}
-//	//for _, v := range user {
-//	//	ChatGPTUsers[v.User] = v
-//	//}
+//	var user []ChatGPTUserInfo
+//	result := DB.Model(ChatGPTUserInfo{}).Find(&user)
+//	if result.Error != nil {
+//		panic("failed to find user info")
+//	}
+//	for _, v := range user {
+//		ChatGPTUsers[v.User] = v
+//	}
 //}
 
 type ChatGPT struct {

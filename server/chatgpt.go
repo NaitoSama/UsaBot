@@ -155,6 +155,14 @@ func ChatWithContext(msg Models.Message, user Models.ChatGPTUserInfo) {
 		return
 	}
 
+	record := Models.ChatGPTContext{
+		Role:    role,
+		Content: messages[len(messages)-1].Content,
+		User:    msg.Sender.UserID,
+		State:   "enable",
+	}
+	Models.DB.Create(&record)
+
 	for _, v := range chatGPTresponse.Choices {
 		temp := fmt.Sprintf("[CQ:at,qq=%d] %s", msg.Sender.UserID, v.Message.Content)
 		replyContent := Models.SendGroupMessage{
@@ -162,7 +170,7 @@ func ChatWithContext(msg Models.Message, user Models.ChatGPTUserInfo) {
 			Message: temp,
 		}
 		common.PostToCQHTTPNoResponse(replyContent, "/send_group_msg")
-		record := Models.ChatGPTContext{
+		record = Models.ChatGPTContext{
 			Role:    "assistant",
 			Content: v.Message.Content,
 			User:    msg.Sender.UserID,

@@ -67,7 +67,7 @@ func MsgHandler() {
 						}
 						lock.RUnlock()
 
-						var count int64
+						var count int64 = 0
 						Models.DB.Model(Models.ChatGPTContext{}).Where("user = ? and state = ?", user.User, "enable").Count(&count)
 
 						if count >= int64(user.MaxContexts) {
@@ -76,23 +76,49 @@ func MsgHandler() {
 							count = 0
 						}
 
-						if strings.Contains(body.Message, "[AI]") {
-							temp := fmt.Sprintf("[CQ:at,qq=%d] \n用户：%d\n是否开启上下文：%t\n上下文总额度：%d\n剩余额度：%d\n回复“[清空上下文]”可以重置聊天哦", body.Sender.UserID, body.Sender.UserID, user.EnableContext, user.MaxContexts, count)
+						if strings.Contains(body.Message, "&#91;AI&#93;") {
+							temp := fmt.Sprintf("[CQ:at,qq=%d] \n用户：%d\n是否开启上下文：%t\n上下文总额度：%d\n剩余额度：%d\n回复“[清空上下文]”可以重置聊天哦", body.Sender.UserID, body.Sender.UserID, user.EnableContext, user.MaxContexts, int64(user.MaxContexts)-count)
 							replyContent := Models.SendGroupMessage{
 								GroupID: body.GroupID,
 								Message: temp,
 							}
 							common.PostToCQHTTPNoResponse(replyContent, "/send_group_msg")
-							return
+							break
 						}
 
-						if strings.Contains(body.Message, "[清空上下文]") {
+						if strings.Contains(body.Message, "&#91;清空上下文&#93;") {
 							Models.DB.Model(&Models.ChatGPTContext{}).Where("user = ? and state = ?", user.User, "enable").Update("state", "disable")
 							common.PostToCQHTTPNoResponse(Models.SendGroupMessage{
 								GroupID: body.GroupID,
-								Message: "清除完了哦",
+								Message: "[CQ:at,qq=" + strconv.FormatInt(body.Sender.UserID, 10) + "] 清除完了哦",
 							}, "/send_group_msg")
-							return
+							break
+						}
+
+						if strings.Contains(body.Message, "&#91;开启上下文&#93;") {
+							user.EnableContext = true
+							lock.Lock()
+							Models.ChatGPTUsers[body.Sender.UserID] = user
+							lock.Unlock()
+							Models.DB.Save(&user)
+							common.PostToCQHTTPNoResponse(Models.SendGroupMessage{
+								GroupID: body.GroupID,
+								Message: "[CQ:at,qq=" + strconv.FormatInt(body.Sender.UserID, 10) + "] 开启了哦",
+							}, "/send_group_msg")
+							break
+						}
+
+						if strings.Contains(body.Message, "&#91;关闭上下文&#93;") {
+							user.EnableContext = false
+							lock.Lock()
+							Models.ChatGPTUsers[body.Sender.UserID] = user
+							lock.Unlock()
+							Models.DB.Save(&user)
+							common.PostToCQHTTPNoResponse(Models.SendGroupMessage{
+								GroupID: body.GroupID,
+								Message: "[CQ:at,qq=" + strconv.FormatInt(body.Sender.UserID, 10) + "] 关闭了哦",
+							}, "/send_group_msg")
+							break
 						}
 
 						if user.EnableContext {
