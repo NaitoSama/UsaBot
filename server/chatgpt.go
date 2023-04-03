@@ -82,7 +82,7 @@ func ChatWithContext(msg Models.Message, user Models.ChatGPTUserInfo) {
 	var client *http.Client
 	var messages []Models.ChatGPTMessage
 
-	if strings.Contains(msg.Message, "[设定]") {
+	if strings.Contains(msg.Message, "&#91;设定&#93;") {
 		role = "system"
 	} else {
 		role = "user"
