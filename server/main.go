@@ -37,12 +37,12 @@ func Router() {
 }
 
 func MsgHandler() {
+	lock.RLock()
+	configData := config.Config
+	lock.RUnlock()
 	for true {
 		select {
 		case body := <-msgQueue:
-			lock.RLock()
-			configData := config.Config
-			lock.RUnlock()
 			switch body.MessageType {
 			case "private":
 				echo(body)
