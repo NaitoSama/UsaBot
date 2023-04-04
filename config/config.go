@@ -28,6 +28,7 @@ type General struct {
 	HttpPort  int
 	CQHttpUrl string
 	Proxy     string
+	Owner     int64
 }
 
 type ChatGPT struct {

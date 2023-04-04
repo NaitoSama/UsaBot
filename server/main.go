@@ -5,7 +5,6 @@ import (
 	"UsaBot/common"
 	"UsaBot/config"
 	"encoding/json"
-	"errors"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"strconv"
@@ -41,91 +40,23 @@ func MsgHandler() {
 	for true {
 		select {
 		case body := <-msgQueue:
+			lock.RLock()
+			configData := config.Config
+			lock.RUnlock()
 			switch body.MessageType {
 			case "private":
 				echo(body)
 			case "group":
 				if strings.Contains(body.Message, "[CQ:at,qq="+strconv.FormatInt(body.SelfID, 10)+"]") {
-					if config.Config.Soutu.Enable && strings.Contains(body.Message, "搜图") {
+					if configData.Soutu.Enable && strings.Contains(body.Message, "搜图") {
 						souTu(body)
-					} else if config.Config.PixivPicGetter.Enable && strings.Contains(body.Message, "提取图片") {
+					} else if configData.PixivPicGetter.Enable && strings.Contains(body.Message, "提取图片") {
 						PixivPicGetter(body)
-					} else if config.Config.RandomSetu.Enable && strings.Contains(body.Message, "来点") {
+					} else if configData.RandomSetu.Enable && strings.Contains(body.Message, "来点") {
 						RandomSetu(body)
-					} else if config.Config.ChatGPT.Enable {
+					} else if configData.ChatGPT.Enable {
 
-						lock.RLock()
-						user, ok := Models.ChatGPTUsers[body.Sender.UserID]
-						if !ok {
-							user = Models.ChatGPTUserInfo{
-								User:          body.Sender.UserID,
-								EnableContext: false,
-								MaxContexts:   50,
-							}
-							Models.ChatGPTUsers[body.Sender.UserID] = user
-							Models.DB.Create(&user)
-						}
-						lock.RUnlock()
-
-						var count int64 = 0
-						Models.DB.Model(Models.ChatGPTContext{}).Where("user = ? and state = ?", user.User, "enable").Count(&count)
-
-						if count >= int64(user.MaxContexts) {
-							common.ErrorResponse(true, body.GroupID, errors.New("您的上下文数量已达上限,现在为您进行清除"))
-							Models.DB.Model(&Models.ChatGPTContext{}).Where("user = ? and state = ?", user.User, "enable").Update("state", "disable")
-							count = 0
-						}
-
-						if strings.Contains(body.Message, "&#91;AI&#93;") {
-							temp := fmt.Sprintf("[CQ:at,qq=%d] \n用户：%d\n是否开启上下文：%t\n上下文总额度：%d\n剩余额度：%d\n输入带有[设定]可以diy回复\n回复[开启上下文]启用聊天记忆\n回复[关闭上下文]停用聊天记忆\n回复“[清空上下文]”重置聊天", body.Sender.UserID, body.Sender.UserID, user.EnableContext, user.MaxContexts, int64(user.MaxContexts)-count)
-							replyContent := Models.SendGroupMessage{
-								GroupID: body.GroupID,
-								Message: temp,
-							}
-							common.PostToCQHTTPNoResponse(replyContent, "/send_group_msg")
-							break
-						}
-
-						if strings.Contains(body.Message, "&#91;清空上下文&#93;") {
-							Models.DB.Model(&Models.ChatGPTContext{}).Where("user = ? and state = ?", user.User, "enable").Update("state", "disable")
-							common.PostToCQHTTPNoResponse(Models.SendGroupMessage{
-								GroupID: body.GroupID,
-								Message: "[CQ:at,qq=" + strconv.FormatInt(body.Sender.UserID, 10) + "] 清除完了哦",
-							}, "/send_group_msg")
-							break
-						}
-
-						if strings.Contains(body.Message, "&#91;开启上下文&#93;") {
-							user.EnableContext = true
-							lock.Lock()
-							Models.ChatGPTUsers[body.Sender.UserID] = user
-							lock.Unlock()
-							Models.DB.Save(&user)
-							common.PostToCQHTTPNoResponse(Models.SendGroupMessage{
-								GroupID: body.GroupID,
-								Message: "[CQ:at,qq=" + strconv.FormatInt(body.Sender.UserID, 10) + "] 开启了哦",
-							}, "/send_group_msg")
-							break
-						}
-
-						if strings.Contains(body.Message, "&#91;关闭上下文&#93;") {
-							user.EnableContext = false
-							lock.Lock()
-							Models.ChatGPTUsers[body.Sender.UserID] = user
-							lock.Unlock()
-							Models.DB.Save(&user)
-							common.PostToCQHTTPNoResponse(Models.SendGroupMessage{
-								GroupID: body.GroupID,
-								Message: "[CQ:at,qq=" + strconv.FormatInt(body.Sender.UserID, 10) + "] 关闭了哦",
-							}, "/send_group_msg")
-							break
-						}
-
-						if user.EnableContext {
-							ChatWithContext(body, user)
-						} else {
-							ChatGPT(body, "user")
-						}
+						chatGPTMainHandler(body)
 
 						//if body.Sender.UserID == 2471967424 && strings.Contains(body.Message, "system") {
 						//	temp := strings.Split(body.Message, "system")
