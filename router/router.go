@@ -21,7 +21,7 @@ func StartServer() {
 	defer func() {
 		err1 := recover()
 		if err1 != nil {
-
+			common.Logln(2, err1)
 		}
 
 	}()

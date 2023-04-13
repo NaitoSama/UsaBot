@@ -6,17 +6,32 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"io"
+	"net/http"
 	"os"
 	"time"
 )
 
 // DailyNews 每日晨报
 func DailyNews(groups []int64) {
-	resp, err := common.RequestTo("https://api.03c3.cn/zb/api.php", "GET", "", nil)
+	//resp, err := common.RequestTo("https://api.03c3.cn/zb/api.php", "GET", "", nil)
+	//if err != nil {
+	//	common.Logln(2, err)
+	//	return
+	//}
+
+	client := &http.Client{}
+	req, err := http.NewRequest("GET", "https://api.03c3.cn/zb/api.php", nil)
 	if err != nil {
 		common.Logln(2, err)
 		return
 	}
+	resp, err := client.Do(req)
+	if err != nil {
+		common.Logln(2, err)
+		return
+	}
+	defer resp.Body.Close()
+
 	data, err := io.ReadAll(resp.Body)
 	if err != nil {
 		common.Logln(2, err)
@@ -48,7 +63,7 @@ func DailyNews(groups []int64) {
 		common.Logln(2, err)
 		return
 	}
-	picPath := pwd + "/pic/dailyNews-" + datatime + ".png"
+	picPath := pwd + "./pic/dailyNews-" + datatime + ".png"
 	err = common.DownloadPic(picPath, imageUrl)
 	if err != nil {
 		common.Logln(2, err)
@@ -68,7 +83,7 @@ func DailyNews(groups []int64) {
 
 	picBase64 := base64.StdEncoding.EncodeToString(picData)
 
-	content := "早上好，打工人，看看前几天都发生什么事儿了\n[CQ:image,file=base64://" + picBase64 + "]"
+	content := "早上好，打工人，看看最近都发生什么事儿了\n[CQ:image,file=base64://" + picBase64 + "]"
 
 	for _, v := range groups {
 		message := Models.SendGroupMessage{

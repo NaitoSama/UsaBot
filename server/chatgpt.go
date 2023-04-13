@@ -18,6 +18,8 @@ import (
 
 func ChatGPT(msg Models.Message, role string) {
 	var client *http.Client
+	lock.RLock()
+	defer lock.RUnlock()
 
 	message := msg.Message[strings.Index(msg.Message, "]")+1:]
 	msgContent := Models.ChatGPTMessage{
@@ -81,6 +83,8 @@ func ChatGPT(msg Models.Message, role string) {
 }
 
 func ChatWithContext(msg Models.Message, user Models.ChatGPTUserInfo) {
+	lock.RLock()
+	defer lock.RUnlock()
 	var role string
 	var client *http.Client
 	var messages []Models.ChatGPTMessage
@@ -193,9 +197,11 @@ func chatGPTMainHandler(body Models.Message) {
 			MaxContexts:   50,
 		}
 		Models.ChatGPTUsers[body.Sender.UserID] = user
+		lock.Unlock()
 		Models.DB.Create(&user)
+	} else {
+		lock.Unlock()
 	}
-	lock.Unlock()
 
 	var count int64 = 0
 	Models.DB.Model(Models.ChatGPTContext{}).Where("user = ? and state = ?", user.User, "enable").Count(&count)

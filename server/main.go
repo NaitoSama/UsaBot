@@ -54,6 +54,8 @@ func MsgHandler() {
 						PixivPicGetter(body)
 					} else if configData.RandomSetu.Enable && strings.Contains(body.Message, "来点") {
 						RandomSetu(body)
+					} else if strings.Contains(body.Message, "今天吃什么") {
+						RandomFood(body)
 					} else if configData.ChatGPT.Enable {
 
 						chatGPTMainHandler(body)
