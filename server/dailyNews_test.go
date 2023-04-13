@@ -1,24 +1,15 @@
 package server
 
 import (
-	"UsaBot/Models"
 	"UsaBot/common"
-	"encoding/base64"
 	"encoding/json"
+	"fmt"
 	"io"
 	"net/http"
-	"os"
-	"time"
+	"testing"
 )
 
-// DailyNews 每日晨报
-func DailyNews(groups []int64) {
-	//resp, err := common.RequestTo("https://api.03c3.cn/zb/api.php", "GET", "", nil)
-	//if err != nil {
-	//	common.Logln(2, err)
-	//	return
-	//}
-
+func TestDailyNews(t *testing.T) {
 	client := &http.Client{}
 	req, err := http.NewRequest("GET", "https://api.03c3.cn/zb/api.php", nil)
 	if err != nil {
@@ -58,36 +49,11 @@ func DailyNews(groups []int64) {
 		common.Logln(2, "获取接口https://api.03c3.cn/zb/api.php 数据更新时间失败")
 		return
 	}
-	picPath := "./pic/dailyNews-" + datatime + ".png"
+	picPath := "./dailyNews-" + datatime + ".png"
 	err = common.DownloadPic(picPath, imageUrl)
 	if err != nil {
 		common.Logln(2, err)
 		return
 	}
-	picFile, err := os.Open(picPath)
-	if err != nil {
-		common.Logln(2, err)
-		return
-	}
-
-	picData, err := io.ReadAll(picFile)
-	if err != nil {
-		common.Logln(2, err)
-		return
-	}
-
-	picBase64 := base64.StdEncoding.EncodeToString(picData)
-
-	content := "早上好，打工人，看看最近都发生什么事儿了\n[CQ:image,file=base64://" + picBase64 + "]"
-
-	for _, v := range groups {
-		message := Models.SendGroupMessage{
-			GroupID:    v,
-			Message:    content,
-			AutoEscape: false,
-		}
-		common.PostToCQHTTPNoResponse(message, "/send_group_msg")
-		time.Sleep(time.Second)
-	}
-
+	fmt.Println("ok")
 }
