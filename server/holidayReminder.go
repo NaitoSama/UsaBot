@@ -49,11 +49,11 @@ func HolidayReminder() (string, error) {
 		})
 	}
 
-	weekList := []string{"一", "二", "三", "四", "五", "六", "天"}
+	weekList := []string{"天", "一", "二", "三", "四", "五", "六"}
 	now := time.Now()
 	month := int(now.Month())
 	day := now.Day()
-	weekday := weekList[now.Weekday()-1]
+	weekday := weekList[now.Weekday()]
 	date := fmt.Sprintf("%d月%d日 星期%s", month, day, weekday)
 	days := common.GetDayInYear(now.Year())
 
