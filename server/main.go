@@ -7,30 +7,39 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"io"
 	"strconv"
 	"strings"
 	"sync"
 )
 
 var (
-	dataQueue = make(chan Models.Message, 10)
+	dataQueue = make(chan []byte, 10)
 	msgQueue  = make(chan Models.Message, 3)
-	reqQueue  = make(chan Models.Message, 3)
-	ntsQueue  = make(chan Models.Message, 3)
+	reqQueue  = make(chan []byte, 3)
+	ntsQueue  = make(chan []byte, 3)
 	lock      sync.RWMutex
 )
 
 func Router() {
 	for true {
 		select {
-		case body := <-dataQueue:
-			switch body.PostType {
+		case bodyData := <-dataQueue:
+			bodyMap := make(map[string]string)
+			err := json.Unmarshal(bodyData, &bodyMap)
+			if err != nil {
+				common.Logln(2, err)
+				break
+			}
+			switch bodyMap["post_type"] {
 			case "message":
+				body := Models.Message{}
+				err = json.Unmarshal(bodyData, &body)
 				msgQueue <- body
 			case "request":
-				reqQueue <- body
+				reqQueue <- bodyData
 			case "notice":
-				ntsQueue <- body
+				ntsQueue <- bodyData
 			}
 		}
 	}
@@ -88,20 +97,44 @@ func ReqHandler() {
 func NoticeHandler() {
 	for true {
 		select {
-		case _ = <-ntsQueue:
-
+		case data := <-ntsQueue:
+			ntsMap := make(map[string]string)
+			err := json.Unmarshal(data, &ntsMap)
+			if err != nil {
+				common.Logln(2, err)
+				break
+			}
+			ntsType, ok := ntsMap["notice_type"]
+			if !ok {
+				break
+			}
+			switch ntsType {
+			case "group_increase":
+				GroupIncrease(data)
+			case "group_decrease":
+				GroupDecrease(data)
+			}
 		}
 	}
 }
 
 func MainHandler(c *gin.Context) {
-	body := Models.Message{}
-	err := c.ShouldBindJSON(&body)
+	bodyData, err := io.ReadAll(c.Request.Body)
 	if err != nil {
 		common.Logln(2, err)
-		return
 	}
-	dataQueue <- body
+	//err = json.Unmarshal(bodyData, &bodyMap)
+	//if err != nil {
+	//	common.Logln(2, err)
+	//}
+	//
+	//body := Models.Message{}
+	//err = c.ShouldBindJSON(&body)
+	//if err != nil {
+	//	common.Logln(2, err)
+	//	return
+	//}
+	dataQueue <- bodyData
 
 	//TestPrinter(c)
 }
