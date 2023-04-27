@@ -86,3 +86,30 @@ func GroupChatSender(groupID int64, content string) (bool, error) {
 		return true, nil
 	}
 }
+
+// PrivateChatSender 发送私聊，返回错误信息
+func PrivateChatSender(userID int64, content string) error {
+	message := Models.SendPrivateMessage{
+		UserID:  userID,
+		Message: content,
+	}
+	response, err := PostToCQHTTPWithResponse(message, "/send_private_msg")
+	if err != nil {
+		return err
+	}
+	defer response.Body.Close()
+
+	respData, err := io.ReadAll(response.Body)
+	if err != nil {
+		return err
+	}
+
+	respStruct := Models.SendGroupMessageResponse{}
+	err = json.Unmarshal(respData, &respStruct)
+
+	if respStruct.Status != "ok" {
+		return errors.New(respStruct.Wording)
+	} else {
+		return nil
+	}
+}
