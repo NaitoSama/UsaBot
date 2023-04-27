@@ -1,7 +1,7 @@
 package Models
 
 type Message struct {
-	Font        int    `json:"font,omitempty"`
+	Font        int32  `json:"font,omitempty"`
 	PostType    string `json:"post_type"` // message-消息 request-请求 notice-通知 meta_event-元事件
 	MessageType string `json:"message_type,omitempty"`
 	GroupID     int64  `json:"group_id,omitempty"` // 私聊-临时会话发起的群号 群聊-群号
@@ -13,6 +13,7 @@ type Message struct {
 	TargetID    int64  `json:"target_id,omitempty"`
 	Time        int64  `json:"time,omitempty"`
 	UserID      int64  `json:"user_id,omitempty"`
+	MessageID   int32  `json:"message_id,omitempty"`
 }
 
 type sender struct {
