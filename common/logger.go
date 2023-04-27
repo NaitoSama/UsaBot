@@ -47,6 +47,8 @@ func Logf(method int, format string, v ...any) {
 	}
 	usaLog.Output(2, fmt.Sprintf(format, v...))
 }
+
+// Logln 1-info 2-warn 3-error
 func Logln(method int, v ...any) {
 	lock.Lock()
 	defer lock.Unlock()
