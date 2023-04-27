@@ -9,8 +9,6 @@ import (
 	"strings"
 )
 
-// todo 通过私聊控制机器人广播
-
 func BoardCast(msg Models.Message) {
 	failedList, failedNum, err := boardCastLogic(msg)
 	if err != nil {
