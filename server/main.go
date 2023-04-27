@@ -25,7 +25,7 @@ func Router() {
 	for true {
 		select {
 		case bodyData := <-dataQueue:
-			bodyMap := make(map[string]string)
+			bodyMap := make(map[string]interface{})
 			err := json.Unmarshal(bodyData, &bodyMap)
 			if err != nil {
 				common.Logln(2, err)
@@ -54,7 +54,15 @@ func MsgHandler() {
 		case body := <-msgQueue:
 			switch body.MessageType {
 			case "private":
-				echo(body)
+				if strings.Contains(body.Message, "&#91;广播&#93;") {
+					if configData.General.Owner != body.Sender.UserID {
+						common.PrivateChatSender(body.Sender.UserID, "您暂时没有权限使用广播功能哦")
+					} else {
+						BoardCast(body)
+					}
+				} else {
+					echo(body)
+				}
 			case "group":
 				if strings.Contains(body.Message, "[CQ:at,qq="+strconv.FormatInt(body.SelfID, 10)+"]") {
 					if configData.Soutu.Enable && strings.Contains(body.Message, "搜图") {
