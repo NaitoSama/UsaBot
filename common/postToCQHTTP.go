@@ -1,9 +1,12 @@
 package common
 
 import (
+	"UsaBot/Models"
 	"UsaBot/config"
 	"bytes"
 	"encoding/json"
+	"errors"
+	"io"
 	"net/http"
 	"sync"
 )
@@ -56,4 +59,30 @@ func PostToCQHTTPWithResponse(content interface{}, path string) (*http.Response,
 		return nil, err
 	}
 	return res, nil
+}
+
+// GroupChatSender 发送群聊，返回是否成功发送与错误信息
+func GroupChatSender(groupID int64, content string) (bool, error) {
+	message := Models.SendGroupMessage{
+		GroupID: groupID,
+		Message: content,
+	}
+	response, err := PostToCQHTTPWithResponse(message, "/send_group_msg")
+	if err != nil {
+		return false, err
+	}
+	defer response.Body.Close()
+	respData, err := io.ReadAll(response.Body)
+	if err != nil {
+		return false, err
+	}
+
+	respStruct := Models.SendGroupMessageResponse{}
+	err = json.Unmarshal(respData, &respStruct)
+
+	if respStruct.Status != "ok" {
+		return false, errors.New(respStruct.Wording)
+	} else {
+		return true, nil
+	}
 }
