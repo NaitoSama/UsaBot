@@ -55,11 +55,7 @@ func MsgHandler() {
 			switch body.MessageType {
 			case "private":
 				if strings.Contains(body.Message, "&#91;广播&#93;") {
-					if configData.General.Owner != body.Sender.UserID {
-						common.PrivateChatSender(body.Sender.UserID, "您暂时没有权限使用广播功能哦")
-					} else {
-						BoardCast(body)
-					}
+					BoardCast(body)
 				} else {
 					echo(body)
 				}

@@ -3,6 +3,7 @@ package server
 import (
 	"UsaBot/Models"
 	"UsaBot/common"
+	"UsaBot/config"
 	"errors"
 	"fmt"
 	"strconv"
@@ -10,6 +11,13 @@ import (
 )
 
 func BoardCast(msg Models.Message) {
+	lock.RLock()
+	masterID := config.Config.General.Owner
+	lock.RUnlock()
+	if msg.Sender.UserID != masterID {
+		common.PrivateChatSender(msg.Sender.UserID, "您暂时没有权限使用广播功能哦")
+		return
+	}
 	failedList, failedNum, err := boardCastLogic(msg)
 	if err != nil {
 		common.ErrorResponse(false, msg.Sender.UserID, err)
