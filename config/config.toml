@@ -9,17 +9,17 @@ Enable = true
 Model = "gpt-3.5-turbo"
 UseProxy = false
 Url = "https://api.openai.com/v1/chat/completions"
-AccessToken = "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"
+AccessToken = ""
 
 [DailyNews]
 Enable = true
 Time = "08:00"
-GroupList = [1036326321, 292249427]
+GroupList = []
 
 [HolidayRemainder]
 Enable = true
 Time = "14:00"
-GroupList = [1036326321, 292249427]
+GroupList = []
 
 [PixivPicGetter]
 Enable = true
@@ -32,7 +32,7 @@ Enable = true
 [Soutu]
 Enable = true
 SaucenaoApi = "https://saucenao.com/search.php"
-SaucenaoApiKey = "2eb0f118fea7cc6bf5ea95a6a0badf0c69ea0780"
+SaucenaoApiKey = ""
 Results = 3
 
 

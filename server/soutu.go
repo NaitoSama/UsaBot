@@ -35,7 +35,7 @@ func souTu(msg Models.Message) {
 	}
 	msgContentList := make([]string, 0)
 	for k, v := range result.Results {
-		temp := fmt.Sprintf("第%d个结果、\n[CQ:image,file=%s]\n相似度：%v\n原图链接：%s", k+1, v.Header.Thumbnail, v.Header.Similarity, v.Data.ExtUrls[0])
+		temp := fmt.Sprintf("第%d个结果、\n[CQ:image,file=%s]\n相似度：%v\n原图链接：%s", k, v.Header.Thumbnail, v.Header.Similarity, v.Data.ExtUrls[0])
 		msgContentList = append(msgContentList, temp)
 		//log.Println(temp)
 		//content := Models.SendGroupMessage{
