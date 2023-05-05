@@ -84,7 +84,8 @@ func ChatGPT(msg Models.Message, role string) {
 
 func ChatWithContext(msg Models.Message, user Models.ChatGPTUserInfo) {
 	lock.RLock()
-	defer lock.RUnlock()
+	configData := config.Config
+	lock.RUnlock()
 	var role string
 	var client *http.Client
 	var messages []Models.ChatGPTMessage
@@ -117,14 +118,14 @@ func ChatWithContext(msg Models.Message, user Models.ChatGPTUserInfo) {
 	messages = append(messages, msgContent)
 
 	content := Models.ChatGPT{
-		Model:    config.Config.ChatGPT.Model,
+		Model:    configData.ChatGPT.Model,
 		Messages: messages,
 	}
 	data, _ := json.Marshal(content)
 	param := bytes.NewBuffer(data)
 
-	if config.Config.ChatGPT.UseProxy {
-		proxyUrl, _ := url.Parse(config.Config.General.Proxy)
+	if configData.ChatGPT.UseProxy {
+		proxyUrl, _ := url.Parse(configData.General.Proxy)
 		transport := &http.Transport{
 			Proxy: http.ProxyURL(proxyUrl),
 		}
@@ -135,13 +136,13 @@ func ChatWithContext(msg Models.Message, user Models.ChatGPTUserInfo) {
 		client = &http.Client{}
 	}
 
-	req, err := http.NewRequest("POST", config.Config.ChatGPT.Url, param)
+	req, err := http.NewRequest("POST", configData.ChatGPT.Url, param)
 	if err != nil {
 		common.Logln(2, err)
 		return
 	}
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Authorization", "Bearer "+config.Config.ChatGPT.AccessToken)
+	req.Header.Set("Authorization", "Bearer "+configData.ChatGPT.AccessToken)
 	res, err := client.Do(req)
 	if err != nil {
 		common.Logln(2, err)
