@@ -22,6 +22,7 @@ type config struct {
 	PixivPicGetter   PixivPicGetter
 	RandomSetu       RandomSetu
 	Soutu            Soutu
+	PicGenerator     PicGenerator
 }
 
 type General struct {
@@ -66,4 +67,13 @@ type Soutu struct {
 	SaucenaoApi    string
 	SaucenaoApiKey string
 	Results        int
+}
+
+type PicGenerator struct {
+	Enable      bool
+	Number      int
+	UseProxy    bool
+	Url         string
+	AccessToken string
+	Size        string
 }

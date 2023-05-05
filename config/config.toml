@@ -9,17 +9,17 @@ Enable = true
 Model = "gpt-3.5-turbo"
 UseProxy = false
 Url = "https://api.openai.com/v1/chat/completions"
-AccessToken = ""
+AccessToken = "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"
 
 [DailyNews]
 Enable = true
 Time = "08:00"
-GroupList = []
+GroupList = [1036326321, 292249427]
 
 [HolidayRemainder]
 Enable = true
 Time = "14:00"
-GroupList = []
+GroupList = [1036326321, 292249427]
 
 [PixivPicGetter]
 Enable = true
@@ -32,8 +32,13 @@ Enable = true
 [Soutu]
 Enable = true
 SaucenaoApi = "https://saucenao.com/search.php"
-SaucenaoApiKey = ""
+SaucenaoApiKey = "2eb0f118fea7cc6bf5ea95a6a0badf0c69ea0780"
 Results = 3
 
-
-
+[PicGenerator]
+Enable = true
+Number = 2
+UseProxy = false
+Url = "https://api.openai.com/v1/images/generations"
+AccessToken = "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"
+Size = "1024x1024"

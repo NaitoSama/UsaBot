@@ -69,6 +69,8 @@ func MsgHandler() {
 						RandomSetu(body)
 					} else if strings.Contains(body.Message, "今天吃什么") {
 						RandomFood(body)
+					} else if configData.PicGenerator.Enable && strings.Contains(body.Message, "生成图片") {
+						PicGenerator(body)
 					} else if configData.ChatGPT.Enable {
 
 						chatGPTMainHandler(body)
