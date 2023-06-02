@@ -5,6 +5,8 @@ import (
 	"UsaBot/common"
 	"encoding/base64"
 	"encoding/json"
+	"errors"
+	"fmt"
 	"io"
 	"net/http"
 	"os"
@@ -90,4 +92,50 @@ func DailyNews(groups []int64) {
 		time.Sleep(time.Second)
 	}
 
+}
+
+// DailyNews01 每日新闻，使用“https://api.vvhan.com/60s.html”的api
+func DailyNews01(groupIDs []int64) {
+	client := &http.Client{}
+	req, err := http.NewRequest("GET", "https://api.vvhan.com/api/60s?type=json", nil)
+	if err != nil {
+		common.Logln(2, err)
+		return
+	}
+	resp, err := client.Do(req)
+	if err != nil {
+		common.Logln(2, err)
+		return
+	}
+	defer resp.Body.Close()
+
+	data, err := io.ReadAll(resp.Body)
+	if err != nil {
+		common.Logln(2, err)
+		return
+	}
+
+	dailyNews := Models.DailyNews_01{}
+	err = json.Unmarshal(data, &dailyNews)
+	if err != nil {
+		temp := make(map[string]interface{})
+		_ = json.Unmarshal(data, &temp)
+		respBody := fmt.Sprint(temp)
+		common.Logln(1, respBody)
+		common.Logln(2, err)
+		return
+	}
+
+	for _, v := range groupIDs {
+		if !dailyNews.Success {
+			common.ErrorResponse(true, v, errors.New("每日新闻请求api失败"))
+		} else {
+			content := fmt.Sprintf("早上好打工人，今天是%s，农历%s，%s\n为您准备了以下新闻：\n%s", dailyNews.Time[0], dailyNews.Time[1], dailyNews.Time[2], common.Pic(dailyNews.ImgUrl))
+			_, err = common.GroupChatSender(v, content)
+			if err != nil {
+				common.ErrorResponse(true, v, errors.New("每日新闻发送失败"))
+			}
+		}
+
+	}
 }
