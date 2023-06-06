@@ -183,7 +183,7 @@ func DailyNewsFanXing(groupIDs []int64) error {
 		return err
 	}
 	for _, v := range groupIDs {
-		content := fmt.Sprintf("早上好打工人，今天是%d月%d日，%s\n为您准备了以下新闻：\n%s", now.Month(), now.Day(), weekday[now.Weekday()], picBase)
+		content := fmt.Sprintf("早上好打工人，今天是%d月%d号，%s\n为您准备了以下新闻：\n%s", now.Month(), now.Day(), weekday[now.Weekday()], picBase)
 		_, err = common.GroupChatSender(v, content)
 		if err != nil {
 			common.ErrorResponse(true, v, errors.New("每日新闻发送失败"))
