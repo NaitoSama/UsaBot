@@ -42,3 +42,8 @@ UseProxy = false
 Url = "https://api.openai.com/v1/images/generations"
 AccessToken = "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"
 Size = "1024x1024"
+
+[MoyuRili]
+Enable = true
+Time = "14:00"
+GroupList = [1036326321, 292249427]

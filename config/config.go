@@ -23,6 +23,7 @@ type config struct {
 	RandomSetu       RandomSetu
 	Soutu            Soutu
 	PicGenerator     PicGenerator
+	MoyuRili         MoyuRili
 }
 
 type General struct {
@@ -76,4 +77,10 @@ type PicGenerator struct {
 	Url         string
 	AccessToken string
 	Size        string
+}
+
+type MoyuRili struct {
+	Enable    bool
+	Time      string
+	GroupList []int64
 }

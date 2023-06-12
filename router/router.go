@@ -46,4 +46,7 @@ func scheduleTask() {
 	if config.Config.DailyNews.Enable {
 		common.ScheduleClient.Every(1).Day().At(config.Config.DailyNews.Time).Do(func() { server.DailyNews(config.Config.DailyNews.GroupList) })
 	}
+	if config.Config.MoyuRili.Enable {
+		common.ScheduleClient.Every(1).Day().At(config.Config.MoyuRili.Time).Do(func() { server.MoyuRili(config.Config.MoyuRili.GroupList) })
+	}
 }
