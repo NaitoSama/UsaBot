@@ -11,7 +11,7 @@ import (
 )
 
 func MoyuRili(groupIDs []int64) {
-	content, err := MoyuRiliMainHandler()
+	content, err := MoyuRiliMainHandler02()
 	if err != nil {
 		common.Logln(2, err)
 		return
@@ -22,6 +22,23 @@ func MoyuRili(groupIDs []int64) {
 			common.Logln(2, err)
 		}
 	}
+}
+
+func MoyuRiliMainHandler02() (string, error) {
+	picApi := "https://api.emoao.com/api/moyu"
+	now := time.Now()
+	dataTime := now.Format("2006-01-02")
+	picPath := "./pic/MoyuRili-" + dataTime + ".png"
+	err := common.DownloadPic(picPath, picApi)
+	if err != nil {
+		return "", err
+	}
+	picBase, err := common.PicBase64(picPath)
+	if err != nil {
+		return "", err
+	}
+	content := picBase
+	return content, nil
 }
 
 func MoyuRiliMainHandler() (string, error) {
