@@ -17,7 +17,11 @@ func MsgGenMain(body Models.Message) {
 		common.ErrorResponse(true, body.GroupID, err)
 		return
 	}
-	common.PostToCQHTTPNoResponse(result, "/send_group_forward_msg")
+	toSend := Models.SendForwardMsg{
+		GroupID:  body.GroupID,
+		Messages: result,
+	}
+	common.PostToCQHTTPNoResponse(toSend, "/send_group_forward_msg")
 }
 
 func msgExtract(msg string, groupID int64) ([]Models.ForwardMsg, error) {
@@ -62,15 +66,21 @@ func msgExtract(msg string, groupID int64) ([]Models.ForwardMsg, error) {
 		if err != nil {
 			return nil, err
 		}
-
+		content := []Models.ForwardMsgDataContent{
+			{
+				Type: "text",
+				Data: Models.ForwardMsgDataContentData{Text: chatMsg},
+			},
+		}
 		forwardMsg := Models.ForwardMsg{
 			Type: "node",
 			Data: Models.ForwardMsgData{
 				UserName: qqMember.Nickname,
-				UserID:   qID,
-				Content:  chatMsg,
+				UserID:   strconv.FormatInt(qID, 10),
+				Content:  content,
 			},
 		}
 		result[i] = forwardMsg
 	}
+	return result, nil
 }

@@ -65,12 +65,14 @@ func MsgHandler() {
 						souTu(body)
 					} else if configData.PixivPicGetter.Enable && strings.Contains(body.Message, "提取图片") {
 						PixivPicGetter(body)
-					} else if configData.RandomSetu.Enable && strings.Contains(body.Message, "来点") {
-						RandomSetu(body)
+						//} else if configData.RandomSetu.Enable && strings.Contains(body.Message, "来点") {
+						//	RandomSetu(body)
 					} else if strings.Contains(body.Message, "今天吃什么") {
 						RandomFood(body)
 					} else if configData.PicGenerator.Enable && strings.Contains(body.Message, "生成图片") {
 						PicGenerator(body)
+					} else if configData.ForwardMsgGen.Enable && strings.Contains(body.Message, "生成消息") {
+						MsgGenMain(body)
 					} else if configData.ChatGPT.Enable {
 
 						chatGPTMainHandler(body)
@@ -85,6 +87,8 @@ func MsgHandler() {
 
 					}
 
+				} else if configData.RandomSetu.Enable && strings.Contains(body.Message, "来点") && strings.Contains(body.Message, "图") {
+					RandomSetu(body)
 				}
 			}
 		}

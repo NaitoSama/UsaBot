@@ -24,6 +24,7 @@ type config struct {
 	Soutu            Soutu
 	PicGenerator     PicGenerator
 	MoyuRili         MoyuRili
+	ForwardMsgGen    ForwardMsgGen
 }
 
 type General struct {
@@ -83,4 +84,8 @@ type MoyuRili struct {
 	Enable    bool
 	Time      string
 	GroupList []int64
+}
+
+type ForwardMsgGen struct {
+	Enable bool
 }

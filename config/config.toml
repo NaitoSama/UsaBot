@@ -47,3 +47,6 @@ Size = "1024x1024"
 Enable = true
 Time = "14:00"
 GroupList = [1036326321, 292249427]
+
+[ForwardMsgGen]
+Enable = true

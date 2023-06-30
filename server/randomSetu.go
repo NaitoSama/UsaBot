@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"errors"
 	"io"
+	"os"
 	"regexp"
 	"strconv"
 )
@@ -31,7 +32,31 @@ func RandomSetu(msg Models.Message) {
 		return
 	}
 	setuData := setu.Data[0]
-	content := "[CQ:image,file=" + setuData.Urls.Original + "]\n标题：" + setuData.Title + "\n作者：" + setuData.Author + "\nPID：" + strconv.FormatInt(setuData.PID, 10) + "\n原图网址：" + setuData.Urls.Original
+	// 图片下载
+	pwd, err := os.Getwd()
+	if err != nil {
+		common.Logln(2, err)
+		common.ErrorResponse(true, msg.GroupID, err)
+		return
+	}
+	picPath := pwd + "/pic/" + strconv.FormatInt(setuData.PID, 10) + ".png"
+	// todo 配置文件添加随机涩图的代理
+	err = common.DownloadPic(picPath, setuData.Urls.Original)
+	if err != nil {
+		common.Logln(2, err)
+		common.ErrorResponse(true, msg.GroupID, err)
+		return
+	}
+
+	picCQ, err := common.PicBase64(picPath)
+	if err != nil {
+		common.Logln(2, err)
+		common.ErrorResponse(true, msg.GroupID, err)
+		return
+	}
+
+	//content := "[CQ:image,file=" + setuData.Urls.Original + "]\n标题：" + setuData.Title + "\n作者：" + setuData.Author + "\nPID：" + strconv.FormatInt(setuData.PID, 10) + "\n原图网址：" + setuData.Urls.Original
+	content := picCQ + "\n标题：" + setuData.Title + "\n作者：" + setuData.Author + "\nPID：" + strconv.FormatInt(setuData.PID, 10) + "\n原图网址：" + setuData.Urls.Original
 	message := Models.SendGroupMessage{
 		GroupID: msg.GroupID,
 		Message: content,

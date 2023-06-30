@@ -6,7 +6,6 @@ import (
 	"encoding/json"
 	"net/http"
 	"net/url"
-	"time"
 )
 
 // RequestTo 发送请求 记得关闭resp的body
@@ -34,7 +33,7 @@ func RequestTo(urlS string, method string, contentType string, payload interface
 	}
 
 	client := &http.Client{
-		Timeout: 10 * time.Second,
+		//Timeout: 10 * time.Second,
 	}
 	resp, err := client.Do(req)
 	if err != nil {
@@ -73,7 +72,7 @@ func RequestTOWithProxy(urlS string, method string, contentType string, payload 
 	}
 	client := &http.Client{
 		Transport: transport,
-		Timeout:   10 * time.Second,
+		//Timeout:   10 * time.Second,
 	}
 	resp, err := client.Do(req)
 	if err != nil {
