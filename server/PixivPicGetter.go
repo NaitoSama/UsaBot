@@ -113,7 +113,25 @@ func readPicAndSend(picPath string, msg Models.Message, pid string) error {
 	if respStruct.Status != "ok" {
 		message = Models.SendGroupMessage{
 			GroupID: msg.GroupID,
-			Message: "涩图太涩捏，发不出来，错误信息：" + respStruct.Wording,
+			//Message: "涩图太涩捏，发不出来，错误信息：" + respStruct.Wording,
+			Message: "涩图太涩捏，发不出来，将以特殊形式发出",
+		}
+		common.PostToCQHTTPNoResponse(message, "/send_group_msg")
+		newPicPath, err := common.ModifyPicMD5(picPath)
+		if err != nil {
+			content = "图片修改失败：" + err.Error()
+		} else {
+			picBase64, err = common.PicBase64(newPicPath)
+			if err != nil {
+				content = "图片修改失败：" + err.Error()
+			} else {
+				content = "pid:" + pid + "\n" + picBase64
+			}
+		}
+		message = Models.SendGroupMessage{
+			GroupID:    msg.GroupID,
+			Message:    content,
+			AutoEscape: false,
 		}
 		common.PostToCQHTTPNoResponse(message, "/send_group_msg")
 	}
