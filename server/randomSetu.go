@@ -55,11 +55,12 @@ func RandomSetu(msg Models.Message) {
 		return
 	}
 
+	content := "标题：" + setuData.Title + "\n作者：" + setuData.Author + "\nPID：" + strconv.FormatInt(setuData.PID, 10) + "\n原图网址：" + setuData.Urls.Original
 	//content := "[CQ:image,file=" + setuData.Urls.Original + "]\n标题：" + setuData.Title + "\n作者：" + setuData.Author + "\nPID：" + strconv.FormatInt(setuData.PID, 10) + "\n原图网址：" + setuData.Urls.Original
-	content := picCQ + "\n标题：" + setuData.Title + "\n作者：" + setuData.Author + "\nPID：" + strconv.FormatInt(setuData.PID, 10) + "\n原图网址：" + setuData.Urls.Original
+	//content := picCQ + "\n标题：" + setuData.Title + "\n作者：" + setuData.Author + "\nPID：" + strconv.FormatInt(setuData.PID, 10) + "\n原图网址：" + setuData.Urls.Original
 	message := Models.SendGroupMessage{
 		GroupID: msg.GroupID,
-		Message: content,
+		Message: content + "\n" + picCQ,
 	}
 	response, err := common.PostToCQHTTPWithResponse(message, "/send_group_msg")
 	if err != nil {
@@ -82,9 +83,17 @@ func RandomSetu(msg Models.Message) {
 	if respStruct.Status != "ok" {
 		message = Models.SendGroupMessage{
 			GroupID: msg.GroupID,
-			Message: "涩图太涩捏，发不出来，错误信息：" + respStruct.Wording,
+			Message: "涩图太涩捏，发不出来，错误信息：" + respStruct.Wording + "\n将以特殊方法发出",
 		}
 		common.PostToCQHTTPNoResponse(message, "/send_group_msg")
+		err := specialSendPic(picPath, msg.GroupID, content)
+		if err != nil {
+			message = Models.SendGroupMessage{
+				GroupID: msg.GroupID,
+				Message: "涩图太涩惹，特殊形式也发不出捏",
+			}
+			common.PostToCQHTTPNoResponse(message, "/send_group_msg")
+		}
 	}
 }
 
@@ -135,4 +144,24 @@ func requestLoliconApi(tag string) (*Models.LoliconApiResp, error) {
 		return nil, err
 	}
 	return respStruct, nil
+}
+
+func specialSendPic(picPath string, groupNum int64, content string) error {
+	newPicPath, err := common.ModifyPicMD5(picPath)
+	if err != nil {
+		return err
+	}
+	picCQCode, err := common.PicBase64(newPicPath)
+	if err != nil {
+		return err
+	}
+	message := Models.SendGroupMessage{
+		GroupID: groupNum,
+		Message: content + "\n" + picCQCode,
+	}
+	_, err = common.PostToCQHTTPWithResponse(message, "/send_group_msg")
+	if err != nil {
+		return err
+	}
+	return nil
 }
