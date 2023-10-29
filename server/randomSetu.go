@@ -3,6 +3,7 @@ package server
 import (
 	"UsaBot/Models"
 	"UsaBot/common"
+	"UsaBot/config"
 	"encoding/json"
 	"errors"
 	"io"
@@ -11,8 +12,9 @@ import (
 	"strconv"
 )
 
-// RandomSetu 随机涩图 从lolicon api获取图片
+// RandomSetu Get a random anime pic from Lolicon
 func RandomSetu(msg Models.Message) {
+	setuConfig := config.Config
 	message1 := Models.SendGroupMessage{
 		GroupID: msg.GroupID,
 		Message: "下载中...（如果没有发图那就是被马叔叔吃了）",
@@ -24,7 +26,7 @@ func RandomSetu(msg Models.Message) {
 		common.ErrorResponse(true, msg.GroupID, err)
 		return
 	}
-	// 获取图片
+	// Get pic id from Lolicon's Api
 	setu, err := requestLoliconApi(tag)
 	if err != nil {
 		common.Logln(2, err)
@@ -32,7 +34,7 @@ func RandomSetu(msg Models.Message) {
 		return
 	}
 	setuData := setu.Data[0]
-	// 图片下载
+	// Download pic
 	pwd, err := os.Getwd()
 	if err != nil {
 		common.Logln(2, err)
@@ -40,8 +42,13 @@ func RandomSetu(msg Models.Message) {
 		return
 	}
 	picPath := pwd + "/pic/" + strconv.FormatInt(setuData.PID, 10) + ".png"
-	// todo 配置文件添加随机涩图的代理
-	err = common.DownloadPic(picPath, setuData.Urls.Original)
+	// Download pic with proxy or not
+	if setuConfig.RandomSetu.UseProxy {
+		err = common.DownloadPicWithProxy(picPath, setuData.Urls.Original)
+	} else {
+		err = common.DownloadPic(picPath, setuData.Urls.Original)
+	}
+
 	if err != nil {
 		common.Logln(2, err)
 		common.ErrorResponse(true, msg.GroupID, err)
@@ -79,7 +86,7 @@ func RandomSetu(msg Models.Message) {
 	respStruct := Models.SendGroupMessageResponse{}
 	err = json.Unmarshal(respData, &respStruct)
 
-	// 发送失败判断
+	// can not send msg
 	if respStruct.Status != "ok" {
 		message = Models.SendGroupMessage{
 			GroupID: msg.GroupID,

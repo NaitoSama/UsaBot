@@ -28,6 +28,7 @@ UseProxy = false
 
 [RandomSetu]
 Enable = true
+UseProxy = false
 
 [Soutu]
 Enable = true

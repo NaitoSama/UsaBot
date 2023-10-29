@@ -61,7 +61,8 @@ type PixivPicGetter struct {
 }
 
 type RandomSetu struct {
-	Enable bool
+	Enable   bool
+	UseProxy bool
 }
 
 type Soutu struct {
